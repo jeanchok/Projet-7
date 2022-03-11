@@ -2,12 +2,12 @@ const {Post,User,Comment} = require('../models/index');
 
 const fs = require('fs');
 
-exports.createPost = (req, res, next) => {
+exports.createComment = (req, res, next) => {
     console.log(req.body);
-    const postObject = req.body.post;
-    delete postObject._id;
-    const post = new Post({
-      ...postObject,
+    const commentObject = req.body.comment;
+    delete commentObject._id;
+    const comment = new Comment({
+      ...commentObject,
       userId: req.auth.userId,
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
       /*,likes : 0,
@@ -15,11 +15,11 @@ exports.createPost = (req, res, next) => {
       usersLiked: [' '],
       usersDisliked: [' ']*/
     });
-    post.save()
+    comment.save()
     .then(
       () => {
         res.status(201).json({
-          message: 'Post enregistrée !'
+          message: 'Comment enregistrée !'
         });
       })
     .catch(
@@ -31,11 +31,11 @@ exports.createPost = (req, res, next) => {
     );
 };
 
-exports.getAllPosts = (req, res) => {
-  Post.findAll({include : User})
+exports.getAllComments = (req, res) => {
+  Comment.findAll({include : User,Post})
   .then(
-    (posts) => {
-      res.status(200).json(posts);
+    (comments) => {
+      res.status(200).json(comments);
     })
   .catch(
     (error) => {
@@ -46,11 +46,12 @@ exports.getAllPosts = (req, res) => {
   );
 };
 
-exports.getOnePost = (req, res, next) => {
-  Post.findOne({include : User,Comment},{_id: req.params.id})
-  .then(
-    (post) => {
-      res.status(200).json(post);
+exports.getOneComment = (req, res, next) => {
+  Comment.findOne({
+    _id: req.params.id
+  }).then(
+    (comment) => {
+      res.status(200).json(comment);
     }
   ).catch(
     (error) => {
@@ -62,32 +63,32 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
+  Comment.findOne({ _id: req.params.id })
   .then(
-    (post) => {
-      if (!post) {
+    (comment) => {
+      if (!comment) {
         res.status(404).json({
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId) {
+      if (comment.userId !== req.auth.userId) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
       }
-      const postObject = req.file ?
+      const commentObject = req.file ?
         {
-          ...req.body.post,
+          ...req.body.comment,
           imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
       if(req.file){
-        const filename = post.imageUrl.split('/images/')[1];
+        const filename = comment.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, ()=> { console.log("Image deleted !")})
       };
-      Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+      Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
       .then(() => {
           res.status(201).json({
-            message: 'Post modified !'
+            message: 'Comment changed !'
           });
         }
       )
@@ -103,25 +104,25 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
+  Comment.findOne({ _id: req.params.id })
   .then(
-    (post) => {
-      if (!post) {
+    (comment) => {
+      if (!comment) {
         res.status(404).json({
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId) {
+      if (comment.userId !== req.auth.userId) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
       }
-      Post.findOne({ _id: req.params.id })
-        .then(post => {
-          const filename = post.imageUrl.split('/images/')[1];
+      Comment.findOne({ _id: req.params.id })
+        .then(comment => {
+          const filename = comment.imageUrl.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({ _id: req.params.id })
-              .then(() => res.status(200).json({ message: 'Post deleted !'}))
+            Comment.deleteOne({ _id: req.params.id })
+              .then(() => res.status(200).json({ message: 'Comment deleted !'}))
               .catch(error => res.status(400).json({ error }));
           });
         })

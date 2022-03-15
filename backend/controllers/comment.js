@@ -47,9 +47,9 @@ exports.getAllComments = (req, res) => {
 };
 
 exports.getOneComment = (req, res, next) => {
-  Comment.findOne({
-    _id: req.params.id
-  }).then(
+  Comment.findOne(
+    {_id: req.params.id},{include : User})
+    .then(
     (comment) => {
       res.status(200).json(comment);
     }

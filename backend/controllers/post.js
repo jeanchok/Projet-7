@@ -3,13 +3,15 @@ const {Post,User,Comment} = require('../models/index');
 const fs = require('fs');
 
 exports.createPost = (req, res, next) => {
-    console.log(req.body);
-    const postObject = req.body.post;
+  const postObject = req.file ?
+  {
+    ...req.body.post,
+    attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...req.body.post };
     delete postObject._id;
     const post = new Post({
       ...postObject,
       userId: req.auth.userId,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
       /*,likes : 0,
       dislikes : 0,
       usersLiked: [' '],
@@ -32,7 +34,12 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res) => {
-  Post.findAll({include : User})
+  Post.findAll({include : [
+    {model:User, attributes:['id']},
+    {model:Comment, include:User}
+    ],
+    order:[['createdAt','desc']]
+  })
   .then(
     (posts) => {
       res.status(200).json(posts);
@@ -78,13 +85,16 @@ exports.modifyPost = (req, res, next) => {
       const postObject = req.file ?
         {
           ...req.body.post,
-          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+          attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
       if(req.file){
-        const filename = post.imageUrl.split('/images/')[1];
+        const filename = post.attachment.split('/images/')[1];
         fs.unlink(`images/${filename}`, ()=> { console.log("Image deleted !")})
       };
-      Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+      Post.update({ ...postObject }, {
+        where: { _id: req.params.id 
+        }
+      })
       .then(() => {
           res.status(201).json({
             message: 'Post modified !'
@@ -103,6 +113,7 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
+  console.log(req.params.id);
   Post.findOne({ _id: req.params.id })
   .then(
     (post) => {
@@ -117,14 +128,17 @@ exports.deletePost = (req, res, next) => {
         });
       }
       Post.findOne({ _id: req.params.id })
-        .then(post => {
-          const filename = post.imageUrl.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({ _id: req.params.id })
+        .then(
+          (post) => {
+            if(post.attachment){
+              const filename = post.attachment.split('/images/')[1];
+              fs.unlink(`images/${filename}`)
+            };
+            console.log(post);
+            post.destroy({ _id: req.params.id })
               .then(() => res.status(200).json({ message: 'Post deleted !'}))
               .catch(error => res.status(400).json({ error }));
-          });
-        })
+          })
         .catch(error => res.status(500).json({ error }));
     }
   )

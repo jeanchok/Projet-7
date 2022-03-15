@@ -14,7 +14,7 @@ const loadModel = async () => {
     // User.sync({ force:true });
     // Comment.sync({ force:true });
     
-    await database.sync({ /*force:true*/ });
+    await database.sync(/*{ force:true}*/);
     // await database.query('SET foreign_key_checks = 1');
 
 }

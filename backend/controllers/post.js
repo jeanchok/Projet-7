@@ -35,8 +35,8 @@ exports.createPost = (req, res, next) => {
 
 exports.getAllPosts = (req, res) => {
   Post.findAll({include : [
-    {model:User, attributes:['id']},
-    {model:Comment, include:User}
+    {model:User, attributes:['id','username']},
+    {model:Comment, include:User,attributes:['id','username']}
     ],
     order:[['createdAt','desc']]
   })
@@ -54,7 +54,12 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-  Post.findOne({include : User,Comment},{_id: req.params.id})
+  Post.findOne({include : [
+    {model:User, attributes:['id','username']},
+    {model:Comment, include:User,attributes:['id','username']}
+    ],
+    order:[['createdAt','desc']]
+  },{_id: req.params.id})
   .then(
     (post) => {
       res.status(200).json(post);
@@ -77,7 +82,7 @@ exports.modifyPost = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId) {
+      if (post.userId !== req.auth.userId || req.auth.isAdmin === true) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
@@ -122,7 +127,7 @@ exports.deletePost = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId) {
+      if (post.userId !== req.auth.userId || req.auth.isAdmin === true) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });

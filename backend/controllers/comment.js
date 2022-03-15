@@ -34,7 +34,12 @@ exports.createComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res) => {
-  Comment.findAll({include : User,Post})
+  Comment.findAll({include : [
+    {model:User, attributes:['id','username']},
+    {model:Comment, include:User,attributes:['id','username']}
+    ],
+    order:[['createdAt','desc']]
+  })
   .then(
     (comments) => {
       res.status(200).json(comments);
@@ -50,7 +55,7 @@ exports.getAllComments = (req, res) => {
 
 exports.getOneComment = (req, res, next) => {
   Comment.findOne(
-    {_id: req.params.id},{include : User})
+    {_id: req.params.id},{model:User, attributes:['id','username']})
     .then(
     (comment) => {
       res.status(200).json(comment);
@@ -73,7 +78,7 @@ exports.modifyComment = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (comment.userId !== req.auth.userId) {
+      if (comment.userId !== req.auth.userId || req.auth.isAdmin === true) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
@@ -115,7 +120,7 @@ exports.deleteComment = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (comment.userId !== req.auth.userId) {
+      if (comment.userId !== req.auth.userId || req.auth.isAdmin === true) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });

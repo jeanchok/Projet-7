@@ -1,15 +1,15 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-var CryptoJS = require("crypto-js");
 
 
 exports.signup = (req, res, next) => {
-  const emailCryptoJs = CryptoJS.HmacSHA512(req.body.email, `${process.env.CRYPTOJS_RANDOM_SECRET_KEY}`).toString();
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
     const user = new User({
-        email: emailCryptoJs,
+        isAdmin: false,
+        username: req.body.username,
+        email: req.body.email,
         password: hash
     });
     user.save()
@@ -20,8 +20,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  const emailCryptoJs = CryptoJS.HmacSHA512(req.body.email, `${process.env.CRYPTOJS_RANDOM_SECRET_KEY}`).toString();
-    User.findOne({ email: emailCryptoJs })
+    User.findOne({ email: req.body.email } || { username: req.body.username })
       .then(user => {
         if (!user) {
           return res.status(401).json({ error: 'User not find !' });
@@ -43,4 +42,15 @@ exports.login = (req, res, next) => {
           .catch(error => res.status(500).json({ error }));
       })
       .catch(error => res.status(500).json({ error }));
-  };
+};
+
+exports.deleteUser = (req, res, next) => {
+  User.findOne({ email: req.body.email } || { username: req.body.username })
+    .then(
+      (user) => {
+        user.destroy({ _id: user.id })
+          .then(() => res.status(200).json({ message: 'User deleted !'}))
+          .catch(error => res.status(400).json({ error }));
+      })
+    .catch(error => res.status(500).json({ error }));
+};

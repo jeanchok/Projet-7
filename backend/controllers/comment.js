@@ -35,8 +35,7 @@ exports.createComment = (req, res, next) => {
 
 exports.getAllComments = (req, res) => {
   Comment.findAll({include : [
-    {model:User, attributes:['id','username']},
-    {model:Comment, include:User,attributes:['id','username']}
+    {model:User, attributes:['id','username']}
     ],
     order:[['createdAt','desc']]
   })
@@ -92,7 +91,10 @@ exports.modifyComment = (req, res, next) => {
         const filename = comment.imageUrl.split('/images/')[1];
         fs.unlink(`images/${filename}`, ()=> { console.log("Image deleted !")})
       };
-      Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
+      Comment.update({ ...commentObject }, {
+        where: { _id: req.params.id 
+        }
+      })
       .then(() => {
           res.status(201).json({
             message: 'Comment changed !'
@@ -120,7 +122,7 @@ exports.deleteComment = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (comment.userId !== req.auth.userId || req.auth.isAdmin === true) {
+      if (comment.userId !== req.auth.userId /*|| req.auth.isAdmin === true*/) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });

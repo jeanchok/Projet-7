@@ -36,7 +36,7 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res) => {
   Post.findAll({include : [
     {model:User, attributes:['id','username']},
-    {model:Comment, include:User,attributes:['id','username']}
+    {model:Comment, include:[{model:User, attributes:['id','username']}]}
     ],
     order:[['createdAt','desc']]
   })
@@ -54,12 +54,12 @@ exports.getAllPosts = (req, res) => {
 };
 
 exports.getOnePost = (req, res, next) => {
-  Post.findOne({include : [
+  Post.findOne(({where:{id : req.params.id}}),{include : [
     {model:User, attributes:['id','username']},
-    {model:Comment, include:User,attributes:['id','username']}
+    {model:Comment, include:[{model:User, attributes:['id','username']}]}
     ],
     order:[['createdAt','desc']]
-  },{_id: req.params.id})
+  })
   .then(
     (post) => {
       res.status(200).json(post);
@@ -82,7 +82,7 @@ exports.modifyPost = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId || req.auth.isAdmin === true) {
+      if (post.userId !== req.auth.userId) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
@@ -96,20 +96,17 @@ exports.modifyPost = (req, res, next) => {
         const filename = post.attachment.split('/images/')[1];
         fs.unlink(`images/${filename}`, ()=> { console.log("Image deleted !")})
       };
-      Post.update({ ...postObject }, {
-        where: { _id: req.params.id 
-        }
-      })
+      Post.update({ ...postObject })
       .then(() => {
           res.status(201).json({
-            message: 'Post modified !'
+            message: 'Post modified !', ...postObject,post
           });
         }
       )
       .catch(
         (error) => {
           res.status(400).json({
-            error: error
+            error: error,...postObject
           });
         }
       );
@@ -118,8 +115,8 @@ exports.modifyPost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  console.log(req.params.id);
-  Post.findOne({ _id: req.params.id })
+  Post.findOne({where:{id : req.params.id}},{include :
+    {model:User, attributes:['id','username']}})
   .then(
     (post) => {
       if (!post) {
@@ -127,19 +124,18 @@ exports.deletePost = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId || req.auth.isAdmin === true) {
+      if (post.userId !== req.auth.userId) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });
       }
-      Post.findOne({ _id: req.params.id })
+      Post.findOne({where:{id : req.params.id}})
         .then(
           (post) => {
             if(post.attachment){
               const filename = post.attachment.split('/images/')[1];
               fs.unlink(`images/${filename}`)
             };
-            console.log(post);
             post.destroy({ _id: req.params.id })
               .then(() => res.status(200).json({ message: 'Post deleted !'}))
               .catch(error => res.status(400).json({ error }));

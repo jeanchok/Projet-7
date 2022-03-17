@@ -96,13 +96,14 @@ exports.modifyPost = (req, res, next) => {
         const filename = post.attachment.split('/images/')[1];
         fs.unlink(`images/${filename}`, ()=> { console.log("Image deleted !")})
       };
-      Post.update({ ...postObject })
-      .then(() => {
-          res.status(201).json({
-            message: 'Post modified !', ...postObject,post
-          });
-        }
-      )
+
+      post = {...postObject}
+      post.save()
+      .then(()=>{
+        res.status(201).json({
+                message: 'Post modified !', ...postObject,post
+              })
+            })
       .catch(
         (error) => {
           res.status(400).json({
@@ -110,6 +111,21 @@ exports.modifyPost = (req, res, next) => {
           });
         }
       );
+      
+      // Post.update({...postObject },{where:{id : req.params.id}})
+      // .then(() => {
+      //     res.status(201).json({
+      //       message: 'Post modified !', ...postObject,post
+      //     });
+      //   }
+      // )
+      // .catch(
+      //   (error) => {
+      //     res.status(400).json({
+      //       error: error,...postObject
+      //     });
+      //   }
+      // );
     }
   )
 };
@@ -124,7 +140,7 @@ exports.deletePost = (req, res, next) => {
           error: new Error('No such Thing!')
         });
       }
-      if (post.userId !== req.auth.userId) {
+      if (post.userId !== req.auth.userId && req.auth.isAdmin === false ) {
         res.status(400).json({
           error: new Error('Unauthorized request!')
         });

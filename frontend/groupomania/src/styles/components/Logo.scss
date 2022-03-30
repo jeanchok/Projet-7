@@ -1,0 +1,9 @@
+.logo{
+    align-items: center;
+    height: 200px;
+    @include verticalCenter;
+    &__image{
+        height: 200px;
+        margin: auto;
+    }
+}

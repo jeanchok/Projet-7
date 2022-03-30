@@ -19,7 +19,8 @@ const User = database.define('User',{
     },
     isAdmin : {
         type : DataTypes.STRING,
-        allowNull : false
+        allowNull : false,
+        defaultValue : false
     }
 });
 

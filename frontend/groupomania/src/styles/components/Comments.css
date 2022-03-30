@@ -1,0 +1,15 @@
+.comments {
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
+          box-shadow: 0px 5px 15px 1px #0000002e;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  margin-bottom: 24px;
+  margin-top: 12px;
+  padding: 10px;
+}
+/*# sourceMappingURL=Comments.css.map */

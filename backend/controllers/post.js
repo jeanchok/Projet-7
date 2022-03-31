@@ -1,13 +1,15 @@
 const { Post, User, Comment } = require('../models/index');
 
 const fs = require('fs');
+const { parse } = require('path');
 
 exports.createPost = (req, res, next) => {
   const postObject = req.file ?
     {
-      ...req.body.post,
+      ...req.body,
       attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : req.body.post;
+    } : req.body;
+
   delete postObject._id;
   const post = new Post({
     ...postObject,
@@ -90,7 +92,7 @@ exports.modifyPost = (req, res, next) => {
           });
         }
 
-        const postObject = req.body.post;
+        const postObject = req.body;
         if (req.file) {
           postObject.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
           const filename = post.attachment.split('/images/')[1];

@@ -1,13 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const Comments = ({ comments, storedJwt, getData }) => {
+const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
 
-
-
-    useEffect(() => getData(), []);
 
     const dateFormater = (date) => {
         let newDate = new Date(date).toLocaleDateString("fr-FR", {
@@ -28,7 +25,7 @@ const Comments = ({ comments, storedJwt, getData }) => {
             date: comments.createdAt,
         };
 
-        axios.put("http://localhost:3008/api/comment/" + comments.id, data, {
+        axios.put("http://localhost:3008/api/comment/" + comments.id, { data }, {
             headers: {
                 'Authorization': `Bearer ${storedJwt}`
             }
@@ -43,8 +40,10 @@ const Comments = ({ comments, storedJwt, getData }) => {
             headers: {
                 'Authorization': `Bearer ${storedJwt}`
             }
-        });
-        window.location.reload();
+        })
+            .then((result) => {
+                updateComments(post.Comments.filter((comment) => comment.id !== result.data.comment.id));
+            })
     };
 
 

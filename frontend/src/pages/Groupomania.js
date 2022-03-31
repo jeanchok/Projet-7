@@ -4,6 +4,8 @@ import Logo from "../components/Logo";
 import Post from "../components/Post";
 import Navigation2 from "../components/Navigation2";
 
+const FormData = require('form-data');
+
 const Groupomania = () => {
     const [forumData, setForumData] = useState([]);
     const [content, setContent] = useState("");
@@ -14,12 +16,12 @@ const Groupomania = () => {
     const userId = localStorage.getItem('userId');
 
 
+
     const getData = () => {
         axios
             .get('http://localhost:3008/api/post/', {
                 headers: {
                     'Authorization': `Bearer ${storedJwt}`,
-                    'Content-Type': 'multipart/form-data'
                 }
             })
             .then((res) => setForumData(res.data))
@@ -28,7 +30,7 @@ const Groupomania = () => {
             })
     };
 
-    const updatePost = () => {
+    const updatePost = (updatedPost) => {
         setForumData(updatedPost)
     };
 
@@ -40,30 +42,29 @@ const Groupomania = () => {
         if (content.length < 1) {
             setError(true);
         } else {
-            // const formData = new FormData();
-            // formData.append("attachment", attachment);
-            // formData.append("title", title);
-            // formData.append("title", content);
+            const formData = new FormData();
+            formData.append("attachment", attachment);
+            formData.append("title", title);
+            formData.append("content", content);
             axios
                 .post("http://localhost:3008/api/post/",
-                    {
-                        post: {
-                            title: title,
-                            content: content,
-                            attachment: attachment,
-                        }
-                    }
-                    ,
+                    // {
+                    //     post: {
+                    //         title: title,
+                    //         content: content,
+                    //         attachment: attachment,
+                    //     }
+                    // }
+                    formData,
                     {
                         headers: {
-                            'Authorization': `Bearer ${storedJwt}`
-                            //'Content-Type': 'multipart/form-data'
-                            // 'Content-Type': 'application/json'
+                            'Authorization': `Bearer ${storedJwt}`,
                         }
                     })
                 .then(() => getData());
             setError(false);
             setContent("");
+            setTitle("");
 
 
         }
@@ -97,7 +98,7 @@ const Groupomania = () => {
                 {forumData
                     .sort((a, b) => b.date - a.date)
                     .map((post) => (
-                        <Post key={post.id} post={post} storedJwt={storedJwt} getData={getData} comments={post.comments} updatePost={updatePost} />
+                        <Post key={post.id} post={post} storedJwt={storedJwt} getData={getData} comments={post.comments} updatePost={updatePost} forumData={forumData} />
                     ))
                 }
             </div>

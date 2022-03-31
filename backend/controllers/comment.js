@@ -141,18 +141,17 @@ exports.deleteComment = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-        Comment.findOne({ where: { id: req.params.id } })
-          .then(
-            (comment) => {
-              if (comment.attachment) {
-                const filename = comment.attachment.split('/images/')[1];
-                fs.unlink(`images/${filename}`)
-              };
-              comment.destroy({ _id: req.params.id })
-                .then(() => res.status(200).json({ message: 'Comment deleted !' }))
-                .catch(error => res.status(400).json({ error }));
-            })
-          .catch(error => res.status(500).json({ error }));
+        if (comment.attachment) {
+          const filename = comment.attachment.split('/images/')[1];
+          fs.unlink(`images/${filename}`)
+        };
+        comment.destroy({ _id: req.params.id })
+          .then((commentUser) => res.status(200).json({
+            message: 'Comment deleted !',
+            comment: commentUser
+          }))
+          .catch(error => res.status(400).json({ error }));
       }
     )
+    .catch(error => res.status(500).json({ error }));
 };

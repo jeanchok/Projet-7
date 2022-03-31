@@ -2,16 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import Comments from "./Comments";
 
-const Post = ({ post, storedJwt, getData, updatePost }) => {
+const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editTitle, setEditTitle] = useState("");
+    const [editPostAttachment, seteditPostAttachment] = useState("");
     const [postComments, setpostComments] = useState(post.Comments);
     const [commentContent, setContent] = useState("");
     const [attachment, setAttachment] = useState(null);
     const [error, setError] = useState(false);
 
-
+    const updateComments = (updatedComments) => {
+        setpostComments(updatedComments);
+    };
 
     const dateFormater = (date) => {
         let newDate = new Date(date).toLocaleDateString("fr-FR", {
@@ -26,19 +29,24 @@ const Post = ({ post, storedJwt, getData, updatePost }) => {
     };
 
     const handleEdit = () => {
-        const data = {
-            username: post.username,
-            title: editTitle ? editTitle : post.title,
-            content: editContent ? editContent : post.content,
-            date: post.createdAt,
-        };
 
-        axios.put("http://localhost:3008/api/post/" + post.id, data, {
+        // username: post.username;
+        let title = editTitle ? editTitle : post.title;
+        let content = editContent ? editContent : post.content;
+        let attachment = editPostAttachment ? editPostAttachment : post.attachment;
+
+        const formData = new FormData();
+        formData.append("attachment", attachment);
+        formData.append("title", title);
+        formData.append("content", content);
+
+        axios.put("http://localhost:3008/api/post/" + post.id, formData, {
             headers: {
                 'Authorization': `Bearer ${storedJwt}`
             }
         })
-            .then(() => {
+            .then((result) => {
+                seteditPostAttachment(result.data.postObject.attachment);
                 setIsEditing(false);
             });
     };
@@ -49,14 +57,9 @@ const Post = ({ post, storedJwt, getData, updatePost }) => {
                 'Authorization': `Bearer ${storedJwt}`
             }
         })
-        // .then((result) => {
-        //     const asArray = Object.entries(post);
-        //     const filtered = asArray.filter(([key, value]) => {
-        //         return key !== result.data.post;
-        //     });
-        //     const newPostObject = Object.fromEntries(filtered);
-        //     updatePost(newPostObject)
-        // })
+            .then((result) => {
+                updatePost(forumData.filter((post) => post.id !== result.data.post.id));
+            })
     };
 
     const handleSubmit = (e) => {
@@ -82,7 +85,7 @@ const Post = ({ post, storedJwt, getData, updatePost }) => {
                     })
                 .then((result) => {
                     post.Comments.push(result.data.comment);
-                    setpostComments(post.Comments)
+                    setpostComments(post.Comments);
                 })
         }
     };
@@ -113,6 +116,15 @@ const Post = ({ post, storedJwt, getData, updatePost }) => {
             ) : (
                 <p>{editContent ? editContent : post.content}</p>
             )}
+            {isEditing ? (
+                <img src={post.attachment} alt="attachment" />,
+                <input
+                    className="forum-container__Form--file"
+                    type="file" name="fileToUpload"
+                    onChange={(e) => seteditPostAttachment(e.target.files[0])} />
+            )
+                : (<img src={editPostAttachment ? editPostAttachment : post.attachment} alt="attachment" />)
+            }
             <div className="btn-container">
                 {isEditing ? (
                     <button onClick={() => handleEdit()}>Valider</button>
@@ -135,7 +147,7 @@ const Post = ({ post, storedJwt, getData, updatePost }) => {
                 {postComments
                     .sort((a, b) => b.date - a.date)
                     .map((comments) => (
-                        <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} getData={getData} />
+                        <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} getData={getData} post={post} updateComments={updateComments} />
                     ))
                 }
             </ul>

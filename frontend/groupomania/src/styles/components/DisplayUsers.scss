@@ -1,0 +1,38 @@
+.user-container__adminBox {
+    margin: auto;
+    max-width: 1280px;
+
+}
+
+.user-container__admin {
+    @include verticalCenter;
+    margin: auto;
+    margin-bottom: 20px;
+    border: solid #f2f2f2d3 1px;
+    border-radius: 16px;
+    border-top: transparent;
+    box-shadow: 0px 5px 15px 1px #0000002e;
+    padding-bottom: 15px;
+
+    h3,
+    p {
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &__box {
+        margin: auto;
+    }
+
+    &--grid {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        button {
+            margin: 0 !important;
+            text-align: center;
+            height: 36px;
+        }
+    }
+}

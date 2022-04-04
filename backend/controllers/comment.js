@@ -179,10 +179,10 @@ exports.deleteComment = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-        // if (comment.attachment !== 'null') {
-        //   const filename = comment.attachment.split('/images/')[1];
-        //   fs.unlink(`images/${filename}`)
-        // };
+        if (comment.attachment !== 'null') {
+          const filename = comment.attachment.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") });
+        }
         comment.destroy({ _id: req.params.id })
           .then((commentUser) => res.status(200).json({
             message: 'Comment deleted !',

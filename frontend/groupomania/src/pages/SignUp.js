@@ -40,9 +40,11 @@ const SignUp = () => {
         <div>
             <Logo />
             <Navigation />
-            <form onSubmit={(e) => HandleSignUp(e)}>
-                <label>
-                    Adresse e-mail :
+
+            <form className="homeForm" onSubmit={(e) => HandleSignUp(e)}>
+                <h1 className="hometitle">Inscription</h1>
+                <label className="homeForm__label">
+                    <h2>Adresse e-mail :</h2>
                     <input
                         type="email"
                         name="email"
@@ -50,8 +52,8 @@ const SignUp = () => {
                         value={email}
                     />
                 </label>
-                <label>
-                    Nom d'utilisateur :
+                <label className="homeForm__label">
+                    <h2>Nom d'utilisateur :</h2>
                     <input
                         type="text"
                         name="username"
@@ -59,8 +61,8 @@ const SignUp = () => {
                         value={username}
                     />
                 </label>
-                <label>
-                    Mot de passe :
+                <label className="homeForm__label">
+                    <h2>Mot de passe :</h2>
                     <input
                         type="password"
                         name="password"
@@ -69,7 +71,7 @@ const SignUp = () => {
                     />
                 </label>
                 {error && <p>Veuillez écrire un minimum de 3 caractères</p>}
-                <input type="submit" value="S'enregister" />
+                <input className="homeSubmit" type="submit" value="S'enregister" />
             </form>
         </div>
 

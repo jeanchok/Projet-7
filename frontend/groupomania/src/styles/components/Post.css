@@ -6,7 +6,6 @@
   display: block;
   -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
           box-shadow: 0px 5px 15px 1px #0000002e;
-  width: 100%;
   height: 100%;
   margin-bottom: 24px;
   padding: 15px;
@@ -27,5 +26,9 @@
 .card-header em {
   margin-top: -10px;
   font-size: small;
+}
+
+.card-attachement--img {
+  margin-bottom: 10px;
 }
 /*# sourceMappingURL=Post.css.map */

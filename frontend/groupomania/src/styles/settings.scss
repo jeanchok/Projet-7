@@ -4,6 +4,16 @@
     align-items: center;
 }
 
+@mixin boxRadius {
+    padding: 15px;
+    background-color: $lightGrey2;
+    box-shadow: 0px 5px 15px 1px $lightGrey;
+    border: solid #f2f2f2d3 1px;
+    border-radius: 16px;
+    border-top: transparent;
+    margin-bottom: 10px;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 
@@ -11,6 +21,7 @@
 // Colors 
 $white: white;
 $lightGrey: #f2f2f2d3;
+$lightGrey3: #e6e6e6a4;
 $brightRed : #ffdbdb;
 $brightRed2 : #ffc2c2;
 $blue : #87dbfa;
@@ -28,7 +39,6 @@ button {
     border-radius: 16px;
     border-top: transparent;
     display: inline-block;
-    box-shadow: 0px 5px 15px 1px #0000002e;
     background-color: $brightRed;
     width: 10%;
     min-width: 97px;
@@ -36,6 +46,7 @@ button {
     margin-bottom: 24px;
     margin: 10px;
     padding: 10px;
+    cursor: pointer;
 
     &:hover {
         box-shadow: 0px 6px 14px -6px #000000e3;
@@ -47,4 +58,31 @@ button {
 ul {
     display: flex;
     flex-direction: column;
+}
+
+/* Responsive */
+$breakpoints: (mobile: 768px,
+    tablette: 992px,
+    desktop: 1280px,
+    desktopL: 1440px);
+
+/*Media Queries - desktop*/
+@mixin desktop {
+    @media all and (min-width: map-get($breakpoints, tablette)) and (max-width: map-get($breakpoints, desktopL)) {
+        @content;
+    }
+}
+
+/*Media Queries - Tablette*/
+@mixin tablette-only {
+    @media all and (min-width: map-get($breakpoints, mobile)) and (max-width: map-get($breakpoints, tablette)) {
+        @content;
+    }
+}
+
+/*Media Queries - Mobile*/
+@mixin mobile {
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        @content;
+    }
 }

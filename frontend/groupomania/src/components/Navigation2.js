@@ -21,14 +21,14 @@ const Navigation2 = () => {
                 {
                     isAdmin > 0 ?
                         <NavLink to="/admin" className={(nav) => (nav.isActive ? "nav-active" : "")}>
-                            <li>Administrer les utilisateurs</li>
+                            <li>Administrer</li>
                         </NavLink> : null
                 }
                 <NavLink
                     to="/"
                     className={(nav) => (nav.isActive ? "nav-active" : "")}
                     onClick={() => HandleLogout()}>
-                    <li>Se déconnecter</li>
+                    <li>Déconnexion</li>
                 </NavLink>
             </ul>
         </div>

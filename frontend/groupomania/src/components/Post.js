@@ -102,7 +102,6 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                 .then((result) => {
                     post.Comments.push(result.data.comment);
                     setpostComments(post.Comments);
-                    console.log(post.Comments);
                     setCommentContent("");
                     setCommentContent("");
                 })
@@ -129,7 +128,9 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         defaultValue={editTitle ? editTitle : post.title}
                         onChange={(e) => setEditTitle(e.target.value)} />
                     ) : (
+
                         <h2>{post.title}</h2>
+
                     )}
                 {isEditing ? (
                     <textarea
@@ -138,21 +139,30 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         onChange={(e) => setEditContent(e.target.value)}
                     ></textarea>
                 ) : (
+
                     <p>{editContent ? editContent : post.content}</p>
+
                 )}
             </div>
             <div className="card-attachement">
                 {
-                    (post.attachment !== 'null') ? <img src={editPostAttachment ? editPostAttachment : post.attachment} alt="attachment2" /> : null
+                    (post.attachment !== 'null') ? <img className="card-attachement--img" src={editPostAttachment ? editPostAttachment : post.attachment} alt="attachment2" /> : null
                 }
             </div>
             {/*  */}
             <div className="card-footer">
                 {isEditing ? (
-                    <input
-                        className="forum-container__Form--file"
-                        type="file" name="fileToUpload"
-                        onChange={(e) => seteditPostAttachment(e.target.files[0])} />
+                    <div className="forum-container__Form--box">
+                        <input className="forum-container__Form--file"
+                            type="file"
+                            name="fileToUpload"
+                            onChange={(e) => seteditPostAttachment(e.target.files[0])}
+                        />
+                        <label className="forum-container__Form--label" for="file">
+                            <svg className="forum-container__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                            <span>Choisir un fichier</span>
+                        </label>
+                    </div>
                 )
                     : null}
                 {managePost ? (
@@ -177,14 +187,14 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                 ) : null}
             </div>
             {/* <-- Show Comments --> */}
-            <ul>
-                {postComments
-                    .sort((a, b) => b.date - a.date)
-                    .map((comments) => (
-                        <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} getData={getData} post={post} updateComments={updateComments} />
-                    ))
-                }
-            </ul>
+
+            {postComments
+                .sort((a, b) => b.date - a.date)
+                .map((comments) => (
+                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} getData={getData} post={post} updateComments={updateComments} />
+                ))
+            }
+
 
             {/* <-- Create Comment --> */}
             <form className="postComment" onSubmit={(e) => handleSubmit(e)}>
@@ -196,7 +206,13 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                     value={commentContent}
                     onKeyDown={handleKeyDown}
                 ></textarea>
-                <input className="postComment__file" type="file" name="fileToUpload" onChange={(e) => setCommentAttachment(e.target.files[0])} />
+                <div className="postComment__Form--box">
+                    <input className="postComment__Form--file" type="file" name="fileToUpload" onChange={(e) => setCommentAttachment(e.target.files[0])} />
+                    <label className="postComment__Form--label" for="file">
+                        <svg className="postComment__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                        <span>Choisir un fichier</span>
+                    </label>
+                </div>
                 {error && <p>Veuillez écrire un minimum de 5 caractères</p>}
                 <input className="postComment__submit" type="submit" value="Envoyer" />
             </form>

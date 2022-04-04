@@ -1,0 +1,21 @@
+.user-container {
+  margin: auto;
+  max-width: 1440px;
+  width: 100%;
+}
+
+.user-container__box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.user-container__box--info {
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.user-container__box button {
+  margin-left: 10px;
+}
+/*# sourceMappingURL=User.css.map */

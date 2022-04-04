@@ -138,75 +138,91 @@ const User = () => {
         <div>
             <Logo />
             <Navigation2 />
-            <h1>Mon compte</h1>
-            <button onClick={() => {
-                if (
-                    window.confirm("Voulez-vous vraiment supprimer votre compte ?")
-                ) {
-                    handleDelete();
-                }
-            }}>Supprimer mon compte</button>
-
+            <div className="user-header">
+                <h1>Mon compte</h1>
+                <button onClick={() => {
+                    if (
+                        window.confirm("Voulez-vous vraiment supprimer votre compte ?")
+                    ) {
+                        handleDelete();
+                    }
+                }}>Supprimer mon compte</button>
+            </div>
             <div className="user-container">
                 <div className="user-container-left">
                     <h2>Informations personnelles</h2>
-                    <h3>Adresse email :</h3>
-                    {isMailEditing ? (
-                        <div>
-                            <p>{userData.email}</p>
-                            <form onSubmit={(e) => HandleEmailUpdate(e)}>
-                                <label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        value={email}
-                                    />
-                                </label>
-                                <input type="submit" value="Enregister" />
-                            </form>
-                        </div>) : (<p>{editEmail ? editEmail : userData.email}</p>)}
-                    <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier mon adresse email</button>
-                    <h3>Nom d'utilisateur :</h3>
-                    {isUsernameEditing ? (
-                        <div>
-                            <p>{userData.username}</p>
-                            <form onSubmit={(e) => HandleUsernameUpdate(e)}>
-                                <label>
-                                    <input
-                                        type="text"
-                                        name="username"
-                                        onChange={(e) => setUsername(e.target.value)}
-                                        value={username}
-                                    />
-                                </label>
-                                <input type="submit" value="Enregister" />
-                            </form>
-                        </div>) : (<p>{userData.username}</p>)}
-                    <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier mon nom d'utilisateur</button>
-                    <h3>Mot de passe :</h3>
-                    {isPasswordEditing ? (
-                        <div>
-                            <form onSubmit={(e) => HandlePasswordUpdate(e)}>
-                                <label>
-                                    <input
+                    <div className="user-container__box">
+                        <h3>Adresse email :</h3>
+                        <div className="user-container__box--info">
+                            {isMailEditing ? (
+                                <div>
+                                    <p>{userData.email}</p>
+                                    <form onSubmit={(e) => HandleEmailUpdate(e)}>
+                                        <label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                value={email}
+                                            />
+                                        </label>
+                                        <input type="submit" value="Enregister" />
+                                    </form>
+                                </div>) : (<p>{editEmail ? editEmail : userData.email}</p>)}
 
-                                        type="password"
-                                        name="password"
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        value={password}
-                                    />
-                                </label>
+                        </div>
+                        {isMailEditing ? <button onClick={() => setIsMailEditing(!isMailEditing)}>Annuler</button> : <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>}
+                    </div>
+                    <div className="user-container__box">
+                        <h3>Nom d'utilisateur :</h3>
+                        <div className="user-container__box--info">
+                            {isUsernameEditing ? (
+                                <div>
+                                    <p>{userData.username}</p>
+                                    <form onSubmit={(e) => HandleUsernameUpdate(e)}>
+                                        <label>
+                                            <input
+                                                type="text"
+                                                name="username"
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                value={username}
+                                            />
+                                        </label>
+                                        <input type="submit" value="Enregister" />
+                                    </form>
+                                </div>) : (<p>{userData.username}</p>)}
+                        </div>
+                        {isUsernameEditing ? <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Annuler</button> : <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>}
+                    </div>
 
-                                <input type="submit" value="Enregister" />
-                            </form>
-                        </div>) : (<p></p>)}
-                    <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier mon mot de passe</button>
+
+                    <div className="user-container__box">
+                        <h3>Mot de passe </h3>
+                        <div className="user-container__box--info">
+                            {isPasswordEditing ? (
+                                <div>
+                                    <form onSubmit={(e) => HandlePasswordUpdate(e)}>
+                                        <label>
+                                            <input
+
+                                                type="password"
+                                                name="password"
+                                                onChange={(e) => setPassword(e.target.value)}
+                                                value={password}
+                                            />
+                                        </label>
+
+                                        <input type="submit" value="Enregister" />
+                                    </form>
+                                </div>) : (<p></p>)}
+                        </div>
+                        {isPasswordEditing ? <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Annuler</button> : <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>}
+                    </div>
                 </div>
             </div>
 
 
-            )
+
 
 
 

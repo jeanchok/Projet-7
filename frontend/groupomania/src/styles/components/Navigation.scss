@@ -1,6 +1,5 @@
 .navigation {
     display: flex;
-    max-width: 1280px;
 
     ul {
         display: flex;
@@ -9,6 +8,11 @@
         width: 100%;
         margin: auto;
         padding: 15px;
+        flex-wrap: wrap;
+
+        @include mobile {
+            @include verticalCenter;
+        }
     }
 
     a {
@@ -16,7 +20,6 @@
         max-width: 1280px;
         width: 100%;
         margin: auto;
-        padding: 15px;
         text-decoration: none;
         color: black;
         font-weight: 500;
@@ -32,19 +35,22 @@
         margin-bottom: 24px;
         margin: 10px;
         padding: 10px;
+        min-width: 110px;
+
 
         :hover {
-            color: red;
+            color: $white;
             font-weight: 600;
         }
 
         li {
             list-style-type: none;
+
         }
     }
 }
 
 .nav-active {
-    color: red !important;
+    color: $white !important;
     font-weight: 600;
 }

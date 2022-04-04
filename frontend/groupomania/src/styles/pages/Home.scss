@@ -1,0 +1,39 @@
+.homeForm {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    @include boxRadius;
+    @include verticalCenter;
+    padding-bottom: 50px;
+
+    h2 {
+        font-size: medium;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 1rem;
+    }
+}
+
+.homeSubmit {
+    margin: auto;
+    border: solid transparent 1px;
+    border-radius: 16px;
+    border-top: transparent;
+    box-shadow: 0px 5px 15px 1px #7e7e7e2e;
+    background-color: #87dbfa;
+    width: 20%;
+    min-width: 97px;
+    height: 100%;
+    font-size: large;
+    font-weight: 700;
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+        box-shadow: 0px 6px 14px -6px #8f8f8fe3;
+        background: lighten($blue, 4%);
+    }
+}

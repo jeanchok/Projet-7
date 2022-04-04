@@ -41,9 +41,11 @@ const Login = () => {
         <div>
             <Logo />
             <Navigation />
-            <form onSubmit={(e) => HandleLogin(e)}>
-                <label>
-                    Nom d'utilisateur :
+
+            <form className="homeForm" onSubmit={(e) => HandleLogin(e)}>
+                <h1 className="hometitle">Connexion</h1>
+                <label className="homeForm__label">
+                    <h2>Nom d'utilisateur :</h2>
                     <input
                         type="text"
                         name="username"
@@ -51,8 +53,8 @@ const Login = () => {
                         value={username}
                     />
                 </label>
-                <label>
-                    Mot de passe :
+                <label className="homeForm__label">
+                    <h2>Mot de passe :</h2>
 
                     <input
                         type="password"
@@ -61,7 +63,7 @@ const Login = () => {
                         value={password}
                     />
                 </label>
-                <input type="submit" value="Se connecter" />
+                <input className="homeSubmit" type="submit" value="Se connecter" />
             </form>
         </div>
 

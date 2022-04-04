@@ -29,11 +29,16 @@ const Admin = () => {
         <div>
             <Logo />
             <Navigation2 />
-            {usersData
-                .map((user) => (
-                    <DisplayUsers key={user.id} user={user} getUsersData={getUsersData} />
-                ))
-            }
+            <div className="user-container__adminBox">
+                <h2>
+                    Liste des utilisateurs
+                </h2>
+                {usersData
+                    .map((user) => (
+                        <DisplayUsers key={user.id} user={user} getUsersData={getUsersData} />
+                    ))
+                }
+            </div>
         </div>
     );
 };

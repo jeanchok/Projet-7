@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC;EAEnB,MAAM,EAAE,IAAI;CASf;;AAPI,AAAD,4BAAO,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,qBAAqB,EAAE,cAAc;EACrC,kBAAkB,EAAE,GAAG;EACvB,eAAe,EAAE,IAAI;EACrB,YAAY,EAAE,GAAG;CACpB",
+    "sources": [
+        "DisplayUsers.scss"
+    ],
+    "names": [],
+    "file": "DisplayUsers.css"
+}

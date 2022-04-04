@@ -90,7 +90,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
                 <p>{editContent ? editContent : comments.content}</p>
             )}
             {
-                (comments.attachment == 'null') ? null : <img src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment2" />
+                (comments.attachment == 'null') ? null : <img className="imgComment" src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment2" />
             }
             {/* {console.log(comments.attachment)} */}
             {isEditing ? (

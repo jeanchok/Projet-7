@@ -4,6 +4,23 @@
     overflow: hidden;
     background-color: $white;
 
+    main {
+        width: 100%;
+        margin: auto;
+
+        @include desktop {
+            max-width: 92%;
+        }
+
+        @include tablette-only {
+            max-width: 90%;
+        }
+
+        @include mobile {
+            max-width: 90%;
+        }
+    }
+
     &__Form {
         align-items: stretch;
         flex-direction: column;
@@ -12,7 +29,6 @@
         border-radius: 16px;
         border-top: transparent;
         box-shadow: 0px 5px 15px 1px #0000002e;
-        width: 100%;
         height: 100%;
         margin-bottom: 24px;
         padding: 15px;
@@ -21,37 +37,38 @@
         display: block;
 
         &--title {
-            padding: 15px;
-            background-color: $lightGrey;
-            border: solid #f2f2f2d3 1px;
-            border-radius: 16px;
-            border-top: transparent;
-            display: inline-block;
-            margin-bottom: 10px;
+            @include boxRadius;
             font-size: large;
         }
 
         &--content {
-            padding: 15px;
-            background-color: $white;
-            box-shadow: 0px 5px 15px 1px $lightGrey;
-            border: solid #f2f2f2d3 1px;
-            border-radius: 16px;
-            border-top: transparent;
-            display: inline-block;
-            margin-bottom: 10px;
+            @include boxRadius;
             font-size: medium;
         }
 
         &--file {
 
-            padding: 15px;
-            background-color: $lightGrey;
-            border: solid #f2f2f2d3 1px;
-            border-radius: 16px;
-            border-top: transparent;
-            display: inline-block;
-            margin-bottom: 10px;
+            @include boxRadius;
+            width: 160px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        &--label {
+            padding-left: 10px;
+
+        }
+
+        &--labelIcone {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        &--box {
+            padding-bottom: 10px;
         }
 
         &--submit {
@@ -66,7 +83,7 @@
             height: 100%;
             font-size: large;
             font-weight: 700;
-
+            cursor: pointer;
             padding: 10px;
 
             &:hover {
@@ -84,5 +101,19 @@
 
     form {
         display: flex;
+    }
+}
+
+.card-footer {
+    &::after {
+        content: "";
+
+        display: block;
+        height: 2px;
+        background-color: $lightGrey3;
+
+        position: relative;
+        top: 0;
+        left: 0;
     }
 }

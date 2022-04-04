@@ -1,0 +1,52 @@
+.user-header,
+.user-container {
+    margin: auto;
+    max-width: 600px;
+    //width: 100%;
+    @include verticalCenter;
+    padding-bottom: 20px;
+
+}
+
+.user-container {
+    border: solid #f2f2f2d3 1px;
+    border-radius: 16px;
+    border-top: transparent;
+    box-shadow: 0px 5px 15px 1px #0000002e;
+    overflow: hidden;
+    padding-left: 20px;
+}
+
+.user-container__box {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    flex-wrap: wrap;
+
+    &::before {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 2px;
+        background-color: $lightGrey2;
+
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    @include mobile {
+        justify-content: space-around;
+    }
+
+    &--info {
+        margin-top: 5px;
+        margin-left: 10px;
+
+    }
+
+    button {
+        margin-left: 10px;
+        justify-content: flex-end;
+    }
+}

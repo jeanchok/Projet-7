@@ -67,3 +67,199 @@ exports.deleteUser = (req, res, next) => {
     });
 };
 
+exports.modifyUser = (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } })
+    .then(
+      (user) => {
+        if (!user) {
+          res.status(404).json({
+            error: new Error('No such Thing!')
+          });
+        }
+        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+          res.status(400).json({
+            error: new Error('Unauthorized request!')
+          });
+        }
+        if (req.body.password) {
+          bcrypt.hash(req.body.password, 10)
+            .then(hash => {
+              const userObject = {
+                username: req.body.username,
+                email: req.body.email,
+                password: hash
+              }
+            });
+        } else {
+          const userObject = {
+            username: req.body.username,
+            email: req.body.email
+          }
+        }
+        user.update({ ...userObject }, { where: { id: req.params.id } })
+          .then(() => {
+            res.status(201).json({
+              message: 'Post modified !', userObject
+            });
+          }
+          )
+          .catch(
+            (error) => {
+              res.status(400).json({
+                error: error, ...userObject
+              });
+            }
+          );
+      })
+    .catch(error => {
+      res.status(500).json({ error })
+    })
+};
+
+exports.modifyUsername = (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } })
+    .then(
+      (user) => {
+        if (!user) {
+          res.status(404).json({
+            error: new Error('No such Thing!')
+          });
+        }
+        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+          res.status(400).json({
+            error: new Error('Unauthorized request!')
+          });
+        }
+        user.update({ username: req.body.username }, { where: { id: req.params.id } })
+          .then(() => {
+            res.status(201).json({
+              message: 'Username modified !', username: req.body.username
+            });
+          }
+          )
+          .catch(
+            (error) => {
+              res.status(400).json({
+                error: error, username: req.body.username
+              });
+            }
+          );
+      }
+    )
+    .catch(error => {
+      res.status(500).json({ error })
+    }
+    );
+};
+
+exports.modifyUserEmail = (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } })
+    .then(
+      (user) => {
+        if (!user) {
+          res.status(404).json({
+            error: new Error('No such Thing!')
+          });
+        }
+        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+          res.status(400).json({
+            error: new Error('Unauthorized request!')
+          });
+        }
+        User.update({ email: req.body.email }, { where: { id: req.params.id } })
+          .then((res) => {
+            res.status(201).json({
+              message: 'Email modified !', email: res.body.email
+            });
+          }
+          )
+          .catch(
+            (error) => {
+              res.status(400).json({
+                error: error, email: req.body.email
+              });
+            }
+          );
+      }
+    )
+    .catch(error => {
+      res.status(500).json({ error })
+    }
+    );
+};
+
+exports.modifyUserPassword = (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } })
+    .then(
+      (user) => {
+        if (!user) {
+          res.status(404).json({
+            error: new Error('No such Thing!')
+          });
+        }
+        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+          res.status(400).json({
+            error: new Error('Unauthorized request!')
+          });
+        }
+        bcrypt.hash(req.body.password, 10)
+          .then(hash => {
+            const userPassword = hash;
+            user.update({ password: userPassword }, { where: { id: req.params.id } })
+              .then(() => {
+                res.status(201).json({
+                  message: 'Username modified !'
+                });
+              }
+              )
+              .catch(
+                (error) => {
+                  res.status(400).json({
+                    error: error
+                  });
+                }
+              );
+          }
+          )
+      }
+    )
+    .catch(error => {
+      res.status(500).json({ error })
+    }
+    );
+};
+
+exports.getUser = (req, res, next) => {
+  User.findOne(({ where: { id: req.params.id } }), {
+    attributes: ['id', 'username', 'email']
+  })
+    .then(
+      (user) => {
+        res.status(200).json(user);
+      }
+    )
+    .catch(
+      (error) => {
+        res.status(404).json({
+          error: error
+        });
+      }
+    );
+};
+
+exports.getAllUsers = (req, res) => {
+  User.findAll({
+    attributes: ['id', 'username', 'email']
+  })
+    .then(
+      (users) => {
+        res.status(200).json(users);
+      })
+    .catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+};

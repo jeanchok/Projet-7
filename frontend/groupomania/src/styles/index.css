@@ -1,0 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+body {
+  background: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+button {
+  border: solid transparent 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
+          box-shadow: 0px 5px 15px 1px #0000002e;
+  background-color: #ffdbdb;
+  width: 10%;
+  min-width: 97px;
+  height: 100%;
+  margin-bottom: 24px;
+  margin: 10px;
+  padding: 10px;
+}
+
+button:hover {
+  -webkit-box-shadow: 0px 6px 14px -6px #000000e3;
+          box-shadow: 0px 6px 14px -6px #000000e3;
+  background: #ffe5e5;
+}
+
+ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.comments {
+  border: solid #F2F3F5 1px;
+  background-color: #F2F3F5;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-top: 7px;
+  padding: 8px 10px 20px 20px;
+}
+
+.comments::before {
+  content: "";
+  display: block;
+  clear: both;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.5em;
+  width: 70%;
+  border-top: 1px solid #f2f2f2d3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postComment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+
+.postComment__textarea {
+  width: 100%;
+  height: 100%;
+  border: solid #F2F3F5 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  width: 95%;
+  height: 100%;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-top: 7px;
+  padding: 8px 10px 20px 20px;
+  background-color: #F2F3F5;
+}
+
+.logo {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  align-items: center;
+}
+
+.logo__image {
+  height: 200px;
+  margin: auto;
+}
+
+.navigation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 1280px;
+}
+
+.navigation ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  max-width: 1280px;
+  width: 100%;
+  margin: auto;
+  padding: 15px;
+}
+
+.navigation a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 1280px;
+  width: 100%;
+  margin: auto;
+  padding: 15px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  border: solid transparent 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
+          box-shadow: 0px 5px 15px 1px #0000002e;
+  background-color: #ffdbdb;
+  width: 10%;
+  min-width: 100px;
+  height: 100%;
+  margin-bottom: 24px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.navigation a :hover {
+  color: red;
+  font-weight: 600;
+}
+
+.navigation a li {
+  list-style-type: none;
+}
+
+.post {
+  margin: auto;
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: block;
+  -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
+          box-shadow: 0px 5px 15px 1px #0000002e;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 24px;
+  padding: 15px;
+  max-width: 1280px;
+  overflow: hidden;
+}
+
+.forum-container {
+  margin: auto;
+  max-width: 1440px;
+  overflow: hidden;
+}
+
+.forum-container__Form {
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: auto;
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
+          box-shadow: 0px 5px 15px 1px #0000002e;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 24px;
+  padding: 15px;
+  max-width: 1280px;
+  overflow: hidden;
+  display: block;
+}
+
+.forum-container__Form--title {
+  padding: 15px;
+  background-color: #f2f2f2d3;
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: large;
+}
+
+.forum-container__Form--content {
+  padding: 15px;
+  background-color: white;
+  -webkit-box-shadow: 0px 5px 15px 1px #f2f2f2d3;
+          box-shadow: 0px 5px 15px 1px #f2f2f2d3;
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: medium;
+}
+
+.forum-container__Form--file {
+  padding: 15px;
+  background-color: #f2f2f2d3;
+  border: solid #f2f2f2d3 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.forum-container__Form--submit {
+  margin: auto;
+  border: solid transparent 1px;
+  border-radius: 16px;
+  border-top: transparent;
+  -webkit-box-shadow: 0px 5px 15px 1px #7e7e7e2e;
+          box-shadow: 0px 5px 15px 1px #7e7e7e2e;
+  background-color: #87dbfa;
+  width: 100%;
+  min-width: 97px;
+  height: 100%;
+  font-size: large;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.forum-container__Form--submit:hover {
+  -webkit-box-shadow: 0px 6px 14px -6px #8f8f8fe3;
+          box-shadow: 0px 6px 14px -6px #8f8f8fe3;
+  background: #9be1fb;
+}
+
+.forum-container h1 {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.forum-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=index.css.map */

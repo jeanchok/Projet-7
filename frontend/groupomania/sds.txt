@@ -1,0 +1,6 @@
+ {
+                isEditing ? (<input
+                    className="forum-container__Form--file"
+                    type="file" name="fileToUpload"
+                    onChange={(e) => seteditPostAttachment(e.target.files[0])} />) : post.attachment ? (<img src={post.attachment} alt="attachment" />) : null
+            } 

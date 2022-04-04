@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+const isAdmin = localStorage.getItem('isAdmin');
 
 const Navigation2 = () => {
 
@@ -17,6 +18,12 @@ const Navigation2 = () => {
                 <NavLink to="/user" className={(nav) => (nav.isActive ? "nav-active" : "")}>
                     <li>Mon compte</li>
                 </NavLink>
+                {
+                    isAdmin > 0 ?
+                        <NavLink to="/admin" className={(nav) => (nav.isActive ? "nav-active" : "")}>
+                            <li>Administrer les utilisateurs</li>
+                        </NavLink> : null
+                }
                 <NavLink
                     to="/"
                     className={(nav) => (nav.isActive ? "nav-active" : "")}

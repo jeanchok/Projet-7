@@ -4,12 +4,9 @@
     align-items: center;
 }
 
-@font-face{
-    font-family: "font-1";
-   src : url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-$font-1: "font-1", sans-serif;
+
 
 // Colors 
 $white: white;
@@ -18,19 +15,20 @@ $brightRed : #ffdbdb;
 $brightRed2 : #ffc2c2;
 $blue : #87dbfa;
 $lightBlue : #c1eeff;
+$lightGrey2 : #F2F3F5;
 
 
 body {
     background: $white;
-    font-family: $font-1;
+    font-family: 'Montserrat', sans-serif;
 }
 
-button{
+button {
     border: solid transparent 1px;
     border-radius: 16px;
     border-top: transparent;
-    display:inline-block;
-    box-shadow:  0px 5px 15px 1px #0000002e;
+    display: inline-block;
+    box-shadow: 0px 5px 15px 1px #0000002e;
     background-color: $brightRed;
     width: 10%;
     min-width: 97px;
@@ -38,14 +36,15 @@ button{
     margin-bottom: 24px;
     margin: 10px;
     padding: 10px;
-    &:hover{
+
+    &:hover {
         box-shadow: 0px 6px 14px -6px #000000e3;
         background: lighten($brightRed, 2%);
     }
 
 }
 
-ul{
+ul {
     display: flex;
     flex-direction: column;
 }

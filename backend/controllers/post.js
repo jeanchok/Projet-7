@@ -68,7 +68,8 @@ exports.getOnePost = (req, res, next) => {
       (post) => {
         res.status(200).json(post);
       }
-    ).catch(
+    )
+    .catch(
       (error) => {
         res.status(404).json({
           error: error
@@ -91,7 +92,6 @@ exports.modifyPost = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-
         const postObject = req.body;
         if (req.file) {
           postObject.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
@@ -118,8 +118,9 @@ exports.modifyPost = (req, res, next) => {
 
 exports.deletePost = (req, res, next) => {
   Post.findOne({ where: { id: req.params.id } }, {
-    include:
+    include: [
       { model: User, attributes: ['id', 'username'] }
+    ]
   })
     .then(
       (post) => {
@@ -133,18 +134,18 @@ exports.deletePost = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-        if (post.attachment) {
+        if (post.attachment !== 'null') {
           const filename = post.attachment.split('/images/')[1];
-          fs.unlink(`images/${filename}`)
-        };
+          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") });
+        }
         post.destroy({ _id: req.params.id })
           .then((postUser) => res.status(200).json({
             message: 'Post deleted !',
             post: postUser
           }))
           .catch(error => res.status(400).json({ error }))
+      })
 
-      }
-    )
     .catch(error => res.status(500).json({ error }))
+
 };

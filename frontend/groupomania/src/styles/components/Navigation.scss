@@ -1,7 +1,8 @@
-.navigation{
+.navigation {
     display: flex;
     max-width: 1280px;
-    ul{
+
+    ul {
         display: flex;
         flex-direction: row;
         max-width: 1280px;
@@ -9,7 +10,8 @@
         margin: auto;
         padding: 15px;
     }
-    a{
+
+    a {
         display: flex;
         max-width: 1280px;
         width: 100%;
@@ -21,8 +23,8 @@
         border: solid transparent 1px;
         border-radius: 16px;
         border-top: transparent;
-        display:inline-block;
-        box-shadow:  0px 5px 15px 1px #0000002e;
+        display: inline-block;
+        box-shadow: 0px 5px 15px 1px #0000002e;
         background-color: $brightRed;
         width: 10%;
         min-width: 100px;
@@ -30,12 +32,19 @@
         margin-bottom: 24px;
         margin: 10px;
         padding: 10px;
-        :hover{
+
+        :hover {
             color: red;
             font-weight: 600;
         }
-        li{
+
+        li {
             list-style-type: none;
         }
     }
+}
+
+.nav-active {
+    color: red !important;
+    font-weight: 600;
 }

@@ -15,6 +15,10 @@ const Groupomania = () => {
     const storedJwt = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
 
+    const handleKeyDown = (e) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    }
 
 
     const getData = () => {
@@ -24,7 +28,9 @@ const Groupomania = () => {
                     'Authorization': `Bearer ${storedJwt}`,
                 }
             })
-            .then((res) => setForumData(res.data))
+            .then((res) => {
+                setForumData(res.data);
+            })
             .catch((err) => {
                 console.error(err)
             })
@@ -48,13 +54,6 @@ const Groupomania = () => {
             formData.append("content", content);
             axios
                 .post("http://localhost:3008/api/post/",
-                    // {
-                    //     post: {
-                    //         title: title,
-                    //         content: content,
-                    //         attachment: attachment,
-                    //     }
-                    // }
                     formData,
                     {
                         headers: {
@@ -65,7 +64,7 @@ const Groupomania = () => {
             setError(false);
             setContent("");
             setTitle("");
-
+            //setAttachment(null);
 
         }
     };
@@ -89,8 +88,14 @@ const Groupomania = () => {
                     placeholder="Exprimez vous :)"
                     onChange={(e) => setContent(e.target.value)}
                     value={content}
+                    onKeyDown={(e) => handleKeyDown(e)}
                 ></textarea>
-                <input className="forum-container__Form--file" type="file" name="fileToUpload" onChange={(e) => setAttachment(e.target.files[0])} />
+                <input className="forum-container__Form--file"
+                    type="file"
+                    name="fileToUpload"
+                    onChange={(e) => setAttachment(e.target.files[0])}
+                    defaultValue={attachment}
+                />
                 {error && <p>Veuillez écrire un minimum de 5 caractères</p>}
                 <input className="forum-container__Form--submit" type="submit" value="Poster" />
             </form>

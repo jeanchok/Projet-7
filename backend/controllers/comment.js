@@ -13,9 +13,7 @@ exports.createComment = (req, res, next) => {
     ...commentObject,
     userId: req.auth.userId,
     /*,likes : 0,
-    dislikes : 0,
-    usersLiked: [' '],
-    usersDisliked: [' ']*/
+    usersLiked: [' ']*/
   });
   comment.save()
     .then(

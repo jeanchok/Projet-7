@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
+const fs = require('fs');
 
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
@@ -116,6 +116,50 @@ exports.modifyUser = (req, res, next) => {
     })
 };
 
+exports.modifyUserAvatar = (req, res, next) => {
+  User.findOne({ where: { id: req.params.id } })
+    .then(
+      (user) => {
+        if (!user) {
+          res.status(404).json({
+            error: new Error('No such Thing!')
+          });
+        }
+        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+          res.status(400).json({
+            error: new Error('Unauthorized request!')
+          });
+        }
+        const userAttachment = req.body
+        if (user.attachment !== `${req.protocol}://${req.get('host')}/images/UserImage/Default/avatar.png`) {
+          userAttachment.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+          const filename = user.attachment.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") })
+        } else {
+          userAttachment.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        }
+        User.update({ attachment: attachment }, { where: { id: req.params.id } })
+          .then((res) => {
+            res.status(201).json({
+              message: 'Username modified !', attachment: res.data.attachment
+            });
+          }
+          )
+          .catch(
+            (error) => {
+              res.status(400).json({
+                error: error
+              });
+            }
+          );
+      }
+    )
+    .catch(error => {
+      res.status(500).json({ error })
+    }
+    );
+};
+
 exports.modifyUsername = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -130,7 +174,7 @@ exports.modifyUsername = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-        user.update({ username: req.body.username }, { where: { id: req.params.id } })
+        User.update({ username: req.body.username }, { where: { id: req.params.id } })
           .then(() => {
             res.status(201).json({
               message: 'Username modified !', username: req.body.username
@@ -167,16 +211,16 @@ exports.modifyUserEmail = (req, res, next) => {
           });
         }
         User.update({ email: req.body.email }, { where: { id: req.params.id } })
-          .then((res) => {
+          .then(() => {
             res.status(201).json({
-              message: 'Email modified !', email: res.body.email
+              message: 'Email modified !', email: req.body.email
             });
           }
           )
           .catch(
             (error) => {
               res.status(400).json({
-                error: error, email: req.body.email
+                error: error
               });
             }
           );
@@ -205,7 +249,7 @@ exports.modifyUserPassword = (req, res, next) => {
         bcrypt.hash(req.body.password, 10)
           .then(hash => {
             const userPassword = hash;
-            user.update({ password: userPassword }, { where: { id: req.params.id } })
+            User.update({ password: userPassword }, { where: { id: req.params.id } })
               .then(() => {
                 res.status(201).json({
                   message: 'Username modified !'

@@ -15,12 +15,15 @@ const Groupomania = () => {
     const storedJwt = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
 
+
+
+    // Text area get bigger when typing
     const handleKeyDown = (e) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
 
-
+    // Get all posts and comments
     const getData = () => {
         axios
             .get('http://localhost:3008/api/post/', {
@@ -30,18 +33,22 @@ const Groupomania = () => {
             })
             .then((res) => {
                 setForumData(res.data);
+                console.log(res);
             })
             .catch((err) => {
                 console.error(err)
             })
     };
 
+
+    // Function to handle upate post (as a props)
     const updatePost = (updatedPost) => {
         setForumData(updatedPost)
     };
 
     useEffect(() => getData(), []);
 
+    // Add a Post
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -64,8 +71,7 @@ const Groupomania = () => {
             setError(false);
             setContent("");
             setTitle("");
-            //setAttachment(null);
-
+            setAttachment(null);
         }
     };
 
@@ -77,6 +83,7 @@ const Groupomania = () => {
             </header>
             <main>
                 <h1>Fil d’actualité</h1>
+                {/* Post form submission */}
                 <form className="forum-container__Form" onSubmit={(e) => handleSubmit(e)}>
                     <input
                         placeholder="Titre..."
@@ -100,22 +107,25 @@ const Groupomania = () => {
                             onChange={(e) => setAttachment(e.target.files[0])}
                             defaultValue={attachment}
                         />
-                        <label className="forum-container__Form--label" for="file">
+                        <label className="forum-container__Form--label" htmlFor="file">
                             <svg className="forum-container__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span>Choisir un fichier</span>
+                            {attachment ? <span>Fichier choisit : {attachment.name}</span> : <span>Choisir un fichier</span>}
                         </label>
                     </div>
                     {error && <p>Veuillez écrire un minimum de 5 caractères</p>}
                     <input className="forum-container__Form--submit" type="submit" value="Poster" />
                 </form>
-                <div>
-                    {forumData
-                        .sort((a, b) => b.date - a.date)
-                        .map((post) => (
-                            <Post key={post.id} post={post} storedJwt={storedJwt} getData={getData} comments={post.comments} updatePost={updatePost} forumData={forumData} />
-                        ))
-                    }
-                </div>
+                <ul>
+                    <li>
+                        {/* Mapping posts  */}
+                        {forumData
+                            .sort((a, b) => b.date - a.date)
+                            .map((post) => (
+                                <Post key={post.id} post={post} storedJwt={storedJwt} getData={getData} comments={post.comments} updatePost={updatePost} forumData={forumData} />
+                            ))
+                        }
+                    </li>
+                </ul>
             </main>
         </div>
     );

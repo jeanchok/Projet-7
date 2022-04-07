@@ -1,4 +1,4 @@
-const { Post, User, Comment } = require('../models/index');
+const { Post, User, Comment, PostLikes } = require('../models/index');
 
 const fs = require('fs');
 const { parse } = require('path');
@@ -14,10 +14,7 @@ exports.createPost = (req, res, next) => {
   const post = new Post({
     ...postObject,
     userId: req.auth.userId,
-    /*,likes : 0,
-    dislikes : 0,
-    usersLiked: [' '],
-    usersDisliked: [' ']*/
+    likes: 0
   });
   post.save()
     .then(
@@ -38,8 +35,10 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res) => {
   Post.findAll({
     include: [
-      { model: User, attributes: ['id', 'username'] },
+      //{ model: PostLikes, include: [{ model: User, Post }] },
+      { model: User, attributes: ['id', 'username', 'attachment'] },
       { model: Comment, include: [{ model: User, attributes: ['id', 'username'] }] }
+
     ],
     order: [['createdAt', 'desc']]
   })
@@ -60,7 +59,8 @@ exports.getOnePost = (req, res, next) => {
   Post.findOne(({ where: { id: req.params.id } }), {
     include: [
       { model: User, attributes: ['id', 'username'] },
-      { model: Comment, include: [{ model: User, attributes: ['id', 'username'] }] }
+      { model: Comment, include: [{ model: User, attributes: ['id', 'username'] }] },
+      { model: PostLikes, attributes: ['userId', 'postId'] }
     ],
     order: [['createdAt', 'desc']]
   })
@@ -149,3 +149,71 @@ exports.deletePost = (req, res, next) => {
     .catch(error => res.status(500).json({ error }))
 
 };
+
+exports.likePost = (req, res, next) => {
+  let like = req.body.like
+  let userId = req.body.userId
+  Post.findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      if (!post) {
+        res.status(404).json({
+          error: new Error('No such Thing!')
+        });
+      }
+      let newLikes;
+      let postLikes;
+      switch (like) {
+
+        case true:
+          newLikes = post.likes + 1
+          Post.update({ likes: newLikes }, { where: { id: req.params.id } })
+            .then(() => res.status(200).json({ message: `J'aime` }))
+            .catch((error) => res.status(400).json({ error }))
+          postLikes = new PostLikes({
+            postId: req.params.id,
+            userId: req.auth.userId,
+          });
+          postLikes.save()
+          // .then(
+          //   () => {
+          //     res.status(201).json({
+          //       message: 'Like enregistrée !'
+          //     });
+          //   })
+          // .catch(
+          //   (error) => {
+          //     res.status(400).json({
+          //       error: error
+          //     });
+          //   }
+          // );
+          break;
+
+        case false:
+          newLikes = post.likes - 1
+          Post.update({ likes: newLikes }, { where: { id: req.params.id } })
+            .then(() => res.status(200).json({ message: `J'aime` }))
+            .catch((error) => res.status(400).json({ error }))
+          PostLikes.findOne({ where: { userId: userId } })
+            .then(
+              (postLikes) => {
+                if (!postLikes) {
+                  res.status(404).json({
+                    error: new Error('No such Thing!')
+                  });
+                }
+                postLikes.destroy()
+                // .then(() => res.status(200).json({ message: 'User deleted !' }))
+                // .catch(error => res.status(400).json({ error }))
+              })
+            .catch(error => {
+              res.status(500).json({ error })
+            });
+          break;
+
+        default:
+          console.log(error);
+      }
+    })
+    .catch((error) => res.status(404).json({ error }))
+}

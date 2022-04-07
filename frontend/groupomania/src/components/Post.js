@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Comments from "./Comments";
 
 const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
+    const [like, setlike] = useState(post.likes);
+    const [userLiked, setUserLiked] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editTitle, setEditTitle] = useState("");
@@ -20,8 +22,18 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     }
 
     let managePost;
-    if (isAdmin > 0 || userId == post.User.id) {
+    if (isAdmin > 0 || userId === post.User.id) {
         managePost = true;
+    }
+
+    //console.log(userLiked);
+
+    if (post.likes.length > 0) {
+
+        if (post.userLiked.find(userLiked => userLiked === userId)) {
+            setUserLiked(true);
+            console.log(post.userLiked);
+        }
     }
 
 
@@ -80,6 +92,27 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             })
     };
 
+    const handleLike = () => {
+        axios
+            .post(`http://localhost:3008/api/post/${post.id}/like`, {
+                like: !userLiked,
+                userId: userId,
+            },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${storedJwt}`
+                    }
+                })
+            .then(() => {
+                console.log(userLiked);
+                setUserLiked(!userLiked);
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -103,7 +136,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                     post.Comments.push(result.data.comment);
                     setpostComments(post.Comments);
                     setCommentContent("");
-                    setCommentContent("");
+                    setCommentAttachment(null);
                 })
                 .catch((err) => {
                     console.error(err)
@@ -118,8 +151,13 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             style={{ background: isEditing ? "#f3feff" : "white" }}
         >
             <div className="card-header">
-                <h3>{post.User.username}</h3>
-                <em>Posté le {dateFormater(post.createdAt)}</em>
+                <div className="card-header__imgContainer">
+                    <img className="card-header__imgContainer--img" src={post.User.attachment} />
+                </div>
+                <div className="card-header__text">
+                    <h3>{post.User.username}</h3>
+                    <em>Posté le {dateFormater(post.createdAt)}</em>
+                </div>
             </div>
             <div className="card-body">
                 {isEditing ?
@@ -160,7 +198,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         />
                         <label className="forum-container__Form--label" for="file">
                             <svg className="forum-container__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            <span>Choisir un fichier</span>
+                            {editPostAttachment ? <span>Fichier choisit : {editPostAttachment.name}</span> : <span>Choisir un fichier</span>}
                         </label>
                     </div>
                 )
@@ -185,6 +223,12 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         </button>
                     </div>
                 ) : null}
+                <div className="postLike">
+                    <button onClick={() => handleLike()}>
+                        <span>{post.likes}</span>
+                        <img src={userLiked ? "./icones/Liked.png" : "./icones/Like.png"} alt="like" />
+                    </button>
+                </div>
             </div>
             {/* <-- Show Comments --> */}
 
@@ -208,9 +252,9 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                 ></textarea>
                 <div className="postComment__Form--box">
                     <input className="postComment__Form--file" type="file" name="fileToUpload" onChange={(e) => setCommentAttachment(e.target.files[0])} />
-                    <label className="postComment__Form--label" for="file">
+                    <label className="postComment__Form--label" htmlFor="file">
                         <svg className="postComment__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                        <span>Choisir un fichier</span>
+                        {commentAttachment ? <span>Fichier choisit : {commentAttachment.name}</span> : <span>Choisir un fichier</span>}
                     </label>
                 </div>
                 {error && <p>Veuillez écrire un minimum de 5 caractères</p>}

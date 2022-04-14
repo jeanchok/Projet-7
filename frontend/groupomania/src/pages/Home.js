@@ -4,9 +4,11 @@ import Logo from '../components/Logo';
 
 const Home = () => {
     return (
-        <div>
-            <Logo />
-            <Navigation />
+        <div className="forum-container">
+            <header>
+                <Logo />
+                <Navigation />
+            </header>
         </div>
     );
 };

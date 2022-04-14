@@ -45,7 +45,7 @@ button {
     min-width: 97px;
     height: 100%;
     margin-bottom: 24px;
-    margin: 10px;
+    margin: 4px;
     padding: 10px;
     cursor: pointer;
 
@@ -62,7 +62,8 @@ ul {
 }
 
 /* Responsive */
-$breakpoints: (mobile: 768px,
+$breakpoints: (mobileS: 342px,
+    mobile: 768px,
     tablette: 992px,
     desktop: 1280px,
     desktopL: 1440px);
@@ -84,6 +85,13 @@ $breakpoints: (mobile: 768px,
 /*Media Queries - Mobile*/
 @mixin mobile {
     @media screen and (max-width: map-get($breakpoints, mobile)) {
+        @content;
+    }
+}
+
+/*Media Queries - MobileS*/
+@mixin mobileS {
+    @media screen and (max-width: map-get($breakpoints, mobileS)) {
         @content;
     }
 }

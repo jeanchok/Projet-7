@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const DisplayUsers = (user) => {
-    const storedJwt = localStorage.getItem('token');
+    const storedJwt = sessionStorage.getItem('token');
 
     const handleDelete = () => {
         axios.delete("http://localhost:3008/api/auth/delete/" + user.user.id, {

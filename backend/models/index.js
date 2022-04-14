@@ -10,6 +10,7 @@ const loadModel = async () => {
     Post.hasMany(Comment, { foreignKey: 'postId', onDelete: 'cascade' });
     PostLikes.belongsTo(User, { foreignKey: 'userId', onDelete: 'cascade' });
     PostLikes.belongsTo(Post, { foreignKey: 'postId', onDelete: 'cascade' });
+    Post.hasMany(PostLikes, { foreignKey: 'postId', onDelete: 'cascade' });
 
     // await database.query('SET foreign_key_checks = 0');
 

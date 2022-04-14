@@ -5,8 +5,8 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editCommenttAttachment, seteditCommenttAttachment] = useState("");
-    const isAdmin = localStorage.getItem('isAdmin');
-    const userId = localStorage.getItem('userId');
+    const isAdmin = sessionStorage.getItem('isAdmin');
+    const userId = sessionStorage.getItem('userId');
 
     let manageComment;
 
@@ -77,8 +77,13 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
             style={{ background: isEditing ? "#f3feff" : "#f2f2f2" }}
         >
             <div className="card-header">
-                <h3>{comments.User.username}</h3>
-                <em>commenté le {dateFormater(comments.createdAt)}</em>
+                <div className="card-header__imgContainer">
+                    <img className="card-header__imgContainer--img" src={comments.User.attachment} />
+                </div>
+                <div className="card-header__text">
+                    <h3>{comments.User.username}</h3>
+                    <em>commenté le {dateFormater(comments.createdAt)}</em>
+                </div>
             </div>
             {isEditing ? (
                 <textarea

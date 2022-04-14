@@ -35,9 +35,9 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res) => {
   Post.findAll({
     include: [
-      //{ model: PostLikes, include: [{ model: User, Post }] },
+      { model: PostLikes /*, include: [{ model: User, Post }] */ },
       { model: User, attributes: ['id', 'username', 'attachment'] },
-      { model: Comment, include: [{ model: User, attributes: ['id', 'username'] }] }
+      { model: Comment, include: [{ model: User, attributes: ['id', 'username', 'attachment'] }] }
 
     ],
     order: [['createdAt', 'desc']]
@@ -59,7 +59,7 @@ exports.getOnePost = (req, res, next) => {
   Post.findOne(({ where: { id: req.params.id } }), {
     include: [
       { model: User, attributes: ['id', 'username'] },
-      { model: Comment, include: [{ model: User, attributes: ['id', 'username'] }] },
+      { model: Comment, include: [{ model: User, attributes: ['id', 'username', 'attachment'] }] },
       { model: PostLikes, attributes: ['userId', 'postId'] }
     ],
     order: [['createdAt', 'desc']]
@@ -174,19 +174,8 @@ exports.likePost = (req, res, next) => {
             userId: req.auth.userId,
           });
           postLikes.save()
-          // .then(
-          //   () => {
-          //     res.status(201).json({
-          //       message: 'Like enregistrée !'
-          //     });
-          //   })
-          // .catch(
-          //   (error) => {
-          //     res.status(400).json({
-          //       error: error
-          //     });
-          //   }
-          // );
+          // .then(() => res.status(200).json({ message: `J'aime` }))
+          // .catch((error) => res.status(400).json({ error }))
           break;
 
         case false:

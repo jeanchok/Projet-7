@@ -21,7 +21,7 @@ exports.createComment = (req, res, next) => {
         Comment.findOne({
           where: { id: comment.id },
           include: [
-            { model: User, attributes: ['id', 'username'] }
+            { model: User, attributes: ['id', 'username', 'attachment'] }
           ]
         })
           .then((commentUser) => {
@@ -44,7 +44,7 @@ exports.createComment = (req, res, next) => {
 exports.getAllComments = (req, res) => {
   Comment.findAll({
     include: [
-      { model: User, attributes: ['id', 'username'] }
+      { model: User, attributes: ['id', 'username', 'attachment'] }
     ],
     order: [['createdAt', 'desc']]
   })
@@ -63,7 +63,7 @@ exports.getAllComments = (req, res) => {
 
 exports.getOneComment = (req, res, next) => {
   Comment.findOne(
-    { _id: req.params.id }, { model: User, attributes: ['id', 'username'] })
+    { _id: req.params.id }, { model: User, attributes: ['id', 'username', 'attachment'] })
     .then(
       (comment) => {
         res.status(200).json(comment);
@@ -163,7 +163,7 @@ exports.modifyComment = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
   Comment.findOne({ where: { id: req.params.id } }, {
     include:
-      { model: User, attributes: ['id', 'username'] }
+      { model: User, attributes: ['id', 'username', 'attachment'] }
   })
     .then(
       (comment) => {

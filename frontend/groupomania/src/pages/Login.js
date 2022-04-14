@@ -26,9 +26,9 @@ const Login = () => {
                     window.location.reload();
                 } else {
 
-                    localStorage.setItem('token', res.data.token);
-                    localStorage.setItem('userId', res.data.userId);
-                    localStorage.setItem('isAdmin', res.data.isAdmin);
+                    sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('userId', res.data.userId);
+                    sessionStorage.setItem('isAdmin', res.data.isAdmin);
                     setJwt(res.data.token);
                     window.location.href = "/groupomania";
                 }
@@ -38,10 +38,11 @@ const Login = () => {
 
 
     return (
-        <div>
-            <Logo />
-            <Navigation />
-
+        <div className="forum-container">
+            <header>
+                <Logo />
+                <Navigation />
+            </header>
             <form className="homeForm" onSubmit={(e) => HandleLogin(e)}>
                 <h1 className="hometitle">Connexion</h1>
                 <label className="homeForm__label">

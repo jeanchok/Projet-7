@@ -1,40 +1,40 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Comments from "./Comments";
 
 const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const [like, setlike] = useState(post.likes);
+    const [usersWhosLiked, setUsersWhosLiked] = useState(post.PostLikes.userId);
     const [userLiked, setUserLiked] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editTitle, setEditTitle] = useState("");
+    const [fileToUpdate, setFileToUpdate] = useState(null);
     const [editPostAttachment, seteditPostAttachment] = useState("");
     const [postComments, setpostComments] = useState(post.Comments);
     const [commentContent, setCommentContent] = useState("");
     const [commentAttachment, setCommentAttachment] = useState(null);
     const [error, setError] = useState(false);
-    const isAdmin = localStorage.getItem('isAdmin');
-    const userId = localStorage.getItem('userId');
+    const isAdmin = sessionStorage.getItem('isAdmin');
+    const userId = sessionStorage.getItem('userId');
 
     const handleKeyDown = (e) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
 
-    let managePost;
-    if (isAdmin > 0 || userId === post.User.id) {
-        managePost = true;
-    }
-
-    //console.log(userLiked);
-
-    if (post.likes.length > 0) {
-
-        if (post.userLiked.find(userLiked => userLiked === userId)) {
-            setUserLiked(true);
-            console.log(post.userLiked);
+    function userHasliked() {
+        if (post.likes > 0) {
+            if (post.PostLikes.userId == userId && post.PostLikes.postId == post.id) {
+                setUserLiked(true);
+                console.log(userLiked);
+            }
         }
     }
+
+    //console.log(usersWhosLiked);
+
+    console.log("userid", post.PostLikes.some(like => like.userId == userId));
 
 
     const updateComments = (updatedComments) => {
@@ -57,12 +57,14 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
 
         let title = editTitle ? editTitle : post.title;
         let content = editContent ? editContent : post.content;
-        let attachment = editPostAttachment ? editPostAttachment : post.attachment;
+        let attachment = fileToUpdate ? fileToUpdate : post.attachment;
 
         const formData = new FormData();
         formData.append("attachment", attachment);
         formData.append("title", title);
         formData.append("content", content);
+
+
 
         axios.put("http://localhost:3008/api/post/" + post.id, formData, {
             headers: {
@@ -117,7 +119,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
         e.preventDefault();
 
 
-        if (commentContent.length < 5) {
+        if (commentContent.length < 1) {
             setError(true);
         } else {
             const formData = new FormData();
@@ -194,16 +196,16 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         <input className="forum-container__Form--file"
                             type="file"
                             name="fileToUpload"
-                            onChange={(e) => seteditPostAttachment(e.target.files[0])}
+                            onChange={(e) => setFileToUpdate(e.target.files[0])}
                         />
                         <label className="forum-container__Form--label" for="file">
                             <svg className="forum-container__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                            {editPostAttachment ? <span>Fichier choisit : {editPostAttachment.name}</span> : <span>Choisir un fichier</span>}
+                            {fileToUpdate ? <span>Fichier choisit : {fileToUpdate.name}</span> : <span>Choisir un fichier</span>}
                         </label>
                     </div>
                 )
                     : null}
-                {managePost ? (
+                {(isAdmin > 0 || userId == post.User.id) ? (
                     <div className="btn-container">
                         {isEditing ? (
                             <button onClick={() => handleEdit()}>Valider</button>
@@ -226,6 +228,10 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                 <div className="postLike">
                     <button onClick={() => handleLike()}>
                         <span>{post.likes}</span>
+                        {
+                            (post.PostLikes.userId == userId) ?
+                                setUserLiked(true) : console.log(post.PostLikes.userId)
+                        }
                         <img src={userLiked ? "./icones/Liked.png" : "./icones/Like.png"} alt="like" />
                     </button>
                 </div>

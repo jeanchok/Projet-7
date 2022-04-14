@@ -17,11 +17,25 @@
     padding-left: 20px;
 }
 
+.user-container-left {
+    margin: auto;
+    width: 100%;
+}
+
 .user-container__box {
     display: flex;
     justify-content: space-between;
     margin-left: 20px;
     flex-wrap: wrap;
+    margin-bottom: 5px;
+
+    .userLabel {
+        @include verticalCenter;
+    }
+
+    button {
+        margin: 10px;
+    }
 
     &::before {
         content: "";
@@ -40,14 +54,23 @@
     }
 
     &--info {
+        margin-right: 75px;
         margin-top: 5px;
         margin-left: 10px;
+        display: flex;
+        flex-direction: row;
+    }
 
+    &--infoSubDiv {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: row;
     }
 
     button {
         margin-left: 10px;
         justify-content: flex-end;
+        max-height: 36px;
     }
 }
 
@@ -64,4 +87,53 @@
         height: 100%;
         object-fit: cover;
     }
+}
+
+.passwordInput {
+    margin-top: 15px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+    display: none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+    font-size: medium;
+
+    h3 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    p {
+        margin: 5px;
+        font-size: 16px;
+        @include verticalCenter;
+    }
+}
+
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+    color: red;
+}
+
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "&#10006;";
 }

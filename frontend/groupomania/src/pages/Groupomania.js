@@ -12,8 +12,10 @@ const Groupomania = () => {
     const [title, setTitle] = useState("");
     const [attachment, setAttachment] = useState(null);
     const [error, setError] = useState(false);
-    const storedJwt = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const [managePost, setManagePost] = useState(false);
+    const storedJwt = sessionStorage.getItem('token');
+    const userId = sessionStorage.getItem('userId');
+    const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 
@@ -33,7 +35,6 @@ const Groupomania = () => {
             })
             .then((res) => {
                 setForumData(res.data);
-                console.log(res);
             })
             .catch((err) => {
                 console.error(err)

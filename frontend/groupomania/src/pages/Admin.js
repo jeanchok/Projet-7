@@ -5,7 +5,7 @@ import Navigation2 from "../components/Navigation2";
 import DisplayUsers from "../components/DisplayUsers";
 
 const Admin = () => {
-    const storedJwt = localStorage.getItem('token');
+    const storedJwt = sessionStorage.getItem('token');
     const [usersData, setUsersData] = useState([]);
 
     const getUsersData = () => {
@@ -26,9 +26,11 @@ const Admin = () => {
     useEffect(() => getUsersData(), []);
 
     return (
-        <div>
-            <Logo />
-            <Navigation2 />
+        <div className="forum-container">
+            <header>
+                <Logo />
+                <Navigation2 />
+            </header>
             <div className="user-container__adminBox">
                 <h2>
                     Liste des utilisateurs

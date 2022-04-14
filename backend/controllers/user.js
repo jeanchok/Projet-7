@@ -130,25 +130,24 @@ exports.modifyUserAvatar = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
-        const userAttachment = req.body
+        let newAttachment;
         if (user.attachment !== `${req.protocol}://${req.get('host')}/images/UserImage/Default/avatar.png`) {
-          userAttachment.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+          newAttachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
           const filename = user.attachment.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") })
-        } else {
-          userAttachment.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         }
-        User.update({ attachment: attachment }, { where: { id: req.params.id } })
-          .then((res) => {
+        newAttachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        User.update({ attachment: newAttachment }, { where: { id: req.params.id } })
+          .then(() => {
             res.status(201).json({
-              message: 'Username modified !', attachment: res.data.attachment
+              message: 'User avatar updated !', newAttachment
             });
           }
           )
           .catch(
             (error) => {
               res.status(400).json({
-                error: error
+                error: error, newAttachment
               });
             }
           );

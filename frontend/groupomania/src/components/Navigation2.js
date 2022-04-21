@@ -19,7 +19,7 @@ const Navigation2 = () => {
                     <li>Mon compte</li>
                 </NavLink>
                 {
-                    isAdmin > 0 ?
+                    isAdmin ?
                         <NavLink to="/admin" className={(nav) => (nav.isActive ? "nav-active" : "")}>
                             <li>Administrer</li>
                         </NavLink> : null

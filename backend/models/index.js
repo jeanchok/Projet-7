@@ -12,7 +12,7 @@ const loadModel = async () => {
     PostLikes.belongsTo(Post, { foreignKey: 'postId', onDelete: 'cascade' });
     Post.hasMany(PostLikes, { foreignKey: 'postId', onDelete: 'cascade' });
 
-    await database.sync({ /*force: true*/ });
+    await database.sync({});
 }
 
 module.exports = { loadModel, Post, User, Comment, PostLikes };

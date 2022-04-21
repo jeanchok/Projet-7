@@ -9,7 +9,7 @@ router.post('/signup', password, userCtrl.signup);
 router.put('/email/:id', auth, userCtrl.modifyUserEmail);
 router.put('/avatar/:id', auth, multer, userCtrl.modifyUserAvatar);
 router.put('/username/:id', auth, userCtrl.modifyUsername);
-router.put('/password/:id', auth, userCtrl.modifyUserPassword);
+router.put('/password/:id', auth, password, userCtrl.modifyUserPassword);
 router.get('/:id', auth, userCtrl.getUser);
 router.get('/', auth, userCtrl.getAllUsers);
 

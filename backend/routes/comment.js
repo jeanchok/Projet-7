@@ -10,7 +10,5 @@ router.get('/:id', auth, commentsCtrl.getOneComment);
 router.put('/:id', auth, multer, commentsCtrl.modifyComment);
 router.delete('/:id', auth, commentsCtrl.deleteComment);
 
-// router.post('/:id/like', auth, postsCtrl.likeDislikeSauce);
-
 
 module.exports = router;

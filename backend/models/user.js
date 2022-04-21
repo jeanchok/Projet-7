@@ -15,17 +15,14 @@ const User = database.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/i
-        }
+        allowNull: false
     },
     attachment: {
         type: DataTypes.STRING,
         defaultValue: 'http://localhost:3008/images/UserImage/Default/avatar.png'
     },
     isAdmin: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
     }

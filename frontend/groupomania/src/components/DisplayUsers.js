@@ -38,7 +38,7 @@ const DisplayUsers = (user, usersData) => {
                 <div className="user-container__box">
                     <h3>Est Administrateur :</h3>
                     <div className="user-container__box--info">
-                        <p>{user.user.isAdmin > 0 ? "Oui" : "Non"}</p>
+                        <p>{user.user.isAdmin ? "Oui" : "Non"}</p>
                     </div>
                 </div>
                 <div className="user-container__box">

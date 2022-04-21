@@ -195,7 +195,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                     </div>
                 )
                     : null}
-                {(isAdmin > 0 || userId == post.User.id) ? (
+                {(isAdmin || userId == post.User.id) ? (
                     <div className="btn-container">
                         {isEditing ? (
                             <button onClick={() => handleEdit()}>Valider</button>

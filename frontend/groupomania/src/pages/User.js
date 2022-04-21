@@ -8,16 +8,16 @@ const User = () => {
     const storedJwt = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
     const [email, setEmail] = useState("");
-    const [attachment, setAttachment] = useState(null);
     const [editEmail, seteditEmail] = useState("");
     const [editAttachment, seteditAttachment] = useState("");
     const [fileToUpload, setFileToUpload] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorUsername, setErrorUsername] = useState(false);
+    const [errorPassword, setErrorPassword] = useState(false);
+    const [errorAttachment, setErrorAttachment] = useState(false);
     const [userData, setuserData] = useState([]);
-    const [isEditing, setIsEditing] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
     const [isPictureEditing, setIsPictureEditing] = useState(false);
     const [isMailEditing, setIsMailEditing] = useState(false);
     const [isPasswordEditing, setIsPasswordEditing] = useState(false);
@@ -61,37 +61,19 @@ const User = () => {
                     }
                 })
             .then((res) => {
-                setError(false);
+                setErrorAttachment(false);
                 setuserData({ ...userData, attachment: res.data.newAttachment });
                 setIsPictureEditing(false);
                 setFileToUpload(null);
             })
             .catch((err) => {
+                setErrorAttachment(true);
                 console.error(err);
-                console.log("ici");
             })
     };
 
-
-
-
-
     const HandleEmailUpdate = (e) => {
         e.preventDefault();
-        // email.setCustomValidity("");
-
-        // if (email.validity.patternMissmatch) {
-        //     email.setCustomValidity(`Entrée invalide !`)
-        //     setError(true);
-        // }
-        // if (email.validity.valueMissing) {
-        //     email.setCustomValidity("Veuillez remplir ce champ !")
-        //     setError(true);
-        // }
-        // if (email.validity.tooShort) {
-        //     email.setCustomValidity(`Veuillez entrer au moins ${email.minLength} caractères !`)
-        //     setError(true);
-        // } else {
         axios
             .put("http://localhost:3008/api/auth/email/" + userId,
                 { email: email },
@@ -102,7 +84,7 @@ const User = () => {
                     }
                 })
             .then((res) => {
-                setError(false);
+                setErrorEmail(false);
                 console.log(res);
                 setuserData({ ...userData, email: res.data.email });
                 setIsMailEditing(false);
@@ -110,26 +92,12 @@ const User = () => {
             })
             .catch((err) => {
                 console.error(err);
-                setError(true);
+                setErrorEmail(true);
             })
     };
 
     const HandleUsernameUpdate = (e) => {
         e.preventDefault();
-        // username.setCustomValidity("");
-
-        // if (username.validity.patternMissmatch) {
-        //     username.setCustomValidity(`Entrée invalide !`)
-        //     setError(true);
-        // }
-        // if (username.validity.valueMissing) {
-        //     username.setCustomValidity("Veuillez remplir ce champ !")
-        //     setError(true);
-        // }
-        // if (username.validity.tooShort) {
-        //     username.setCustomValidity(`Veuillez entrer au moins ${username.minLength} caractères !`)
-        //     setError(true);
-        // } else {
         axios.put("http://localhost:3008/api/auth/username/" + userId, {
             username: username
         },
@@ -139,34 +107,19 @@ const User = () => {
                 }
             })
             .then((res) => {
-                setError(false);
+                setErrorUsername(false);
                 setIsUsernameEditing(false);
                 setuserData({ ...userData, username: res.data.username });
             })
             .catch((err) => {
                 console.error(err);
-                setError(true);
+                setErrorUsername(true);
             })
     };
 
 
     const HandlePasswordUpdate = (e) => {
         e.preventDefault();
-
-        // password.setCustomValidity("");
-
-        // if (password.validity.patternMissmatch) {
-        //     password.setCustomValidity(`Veuillez rentrer un mot de passe avec au minimum une majuscule, une minuscule et un chiffre !`)
-        //     setError(true);
-        // }
-        // if (password.validity.valueMissing) {
-        //     password.setCustomValidity("Veuillez remplir ce champ !")
-        //     setError(true);
-        // }
-        // if (password.validity.tooShort) {
-        //     password.setCustomValidity(`Veuillez entrer au moins ${password.minLength} caractères !`)
-        //     setError(true);
-        // } else {
         axios.put("http://localhost:3008/api/auth/password/" + userId, {
             password: password
         },
@@ -176,23 +129,15 @@ const User = () => {
                 }
             })
             .then(() => {
-                setError(false);
+                setErrorPassword(false);
                 console.log("Mot de passe changé");
                 setIsPasswordEditing(false);
             })
             .catch((err) => {
                 console.error(err);
-                setError(true);
+                setErrorPassword(true);
             })
-
-        //}
     };
-
-    let className = 'meninvalid';
-    // if (this.props.isActive) {
-    //     className += ' menu-active';
-    // }
-
 
     return (
 
@@ -246,12 +191,16 @@ const User = () => {
                         {isPictureEditing ?
                             <div className="user-container__box--edit">
                                 {fileToUpload ? <button onClick={() => HandlePictureUpdate()}>Valider</button> : null}
-                                <button onClick={() => setIsPictureEditing(!isPictureEditing)}>Annuler</button>
+                                <button onClick={() => {
+                                    setIsPictureEditing(!isPictureEditing);
+                                    setErrorAttachment(false);
+                                }}>Annuler</button>
                             </div> :
                             <button onClick={() => setIsPictureEditing(!isPictureEditing)}>Modifier</button>
 
                         }
                     </div>
+                    {errorAttachment && <p>Veuillez choisir une image au format PNG, JPEG ou JPG.</p>}
                     <div className="user-container__box">
                         <h3>Adresse email :</h3>
                         <div className="user-container__box--info">
@@ -274,8 +223,12 @@ const User = () => {
                                 </div>) : (<p>{editEmail ? editEmail : userData.email}</p>)}
 
                         </div>
-                        {isMailEditing ? <button onClick={() => setIsMailEditing(!isMailEditing)}>Annuler</button> : <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>}
+                        {isMailEditing ? <button onClick={() => {
+                            setIsMailEditing(!isMailEditing);
+                            setErrorEmail(false);
+                        }}>Annuler</button> : <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>}
                     </div>
+                    {errorEmail && <p>Veuillez choisir une adresse e-mail unique.</p>}
                     <div className="user-container__box">
                         <h3>Nom d'utilisateur :</h3>
                         <div className="user-container__box--info">
@@ -298,9 +251,12 @@ const User = () => {
                                     </form>
                                 </div>) : (<p>{userData.username}</p>)}
                         </div>
-                        {isUsernameEditing ? <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Annuler</button> : <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>}
+                        {isUsernameEditing ? <button onClick={() => {
+                            setIsUsernameEditing(!isUsernameEditing);
+                            setErrorUsername(false);
+                        }}>Annuler</button> : <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>}
                     </div>
-                    {error && <p>Veuillez choisir un nom d'utilisateur et une adresse e-mail unique.</p>}
+                    {errorUsername && <p>Veuillez choisir un nom d'utilisateur unique.</p>}
 
                     <div className="user-container__box">
                         <h3>Mot de passe </h3>
@@ -322,17 +278,15 @@ const User = () => {
                                         </label>
                                         <input type="submit" value="Enregister" />
                                     </form>
-                                    <div id="message" style={{ display: "block" }} >
-                                        <h3>Votre mot de passe doit contenir :</h3>
-                                        <p id="letter" className={className}>Une lettre&nbsp;<b>minuscule</b></p>
-                                        <p id="capital" className={className}>Une lettre&nbsp;<b>majuscule</b></p>
-                                        <p id="number" className={className}>Un&nbsp;<b>nombre</b></p>
-                                        <p id="length" className={className}>Minimum&nbsp;<b>8 caractères</b></p>
-                                    </div>
                                 </div>) : (<p></p>)}
                         </div>
-                        {isPasswordEditing ? <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Annuler</button> : <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>}
+                        {isPasswordEditing ? <button onClick={() => {
+                            setIsPasswordEditing(!isPasswordEditing);
+                            setErrorPassword(false);
+                        }
+                        }>Annuler</button> : <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>}
                     </div>
+                    {errorPassword && <p>Votre mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule.</p>}
                 </div>
             </div>
         </div>

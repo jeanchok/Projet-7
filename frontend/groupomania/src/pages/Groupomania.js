@@ -13,8 +13,6 @@ const Groupomania = () => {
     const [attachment, setAttachment] = useState(null);
     const [error, setError] = useState(false);
     const storedJwt = sessionStorage.getItem('token');
-    const userId = sessionStorage.getItem('userId');
-    const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 

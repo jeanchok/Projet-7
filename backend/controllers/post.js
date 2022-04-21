@@ -125,12 +125,12 @@ exports.deletePost = (req, res, next) => {
     .then(
       (post) => {
         if (!post) {
-          res.status(404).json({
+          return res.status(404).json({
             error: new Error('No such Thing!')
           });
         }
         if (post.userId !== req.auth.userId && !req.auth.isAdmin) {
-          res.status(400).json({
+          return res.status(401).json({
             error: new Error('Unauthorized request!')
           });
         }
@@ -146,7 +146,9 @@ exports.deletePost = (req, res, next) => {
           .catch(error => res.status(400).json({ error }))
       })
 
-    .catch(error => res.status(500).json({ error }))
+    .catch(error => {
+      res.status(500).json({ error })
+    })
 
 };
 

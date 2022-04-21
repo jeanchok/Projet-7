@@ -11,7 +11,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     let manageComment;
 
 
-    if (isAdmin > 0 || userId == comments.userId) {
+    if (isAdmin || userId == comments.userId) {
         manageComment = true;
     }
 

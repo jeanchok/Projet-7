@@ -3,9 +3,9 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const userCtrl = require('../controllers/user');
 const multer = require('../middleware/multer-config');
+const password = require("../middleware/password");
 
-router.post('/signup', userCtrl.signup);
-//router.put('/:id', userCtrl.modifyUser);
+router.post('/signup', password, userCtrl.signup);
 router.put('/email/:id', auth, userCtrl.modifyUserEmail);
 router.put('/avatar/:id', auth, multer, userCtrl.modifyUserAvatar);
 router.put('/username/:id', auth, userCtrl.modifyUsername);

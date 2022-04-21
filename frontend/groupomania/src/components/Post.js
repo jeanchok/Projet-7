@@ -1,11 +1,9 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Comments from "./Comments";
 
 const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const [like, setlike] = useState(post.likes);
-    const [usersWhosLiked, setUsersWhosLiked] = useState(post.PostLikes.userId);
-    const [userLiked, setUserLiked] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editTitle, setEditTitle] = useState("");
@@ -17,25 +15,12 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const [error, setError] = useState(false);
     const isAdmin = sessionStorage.getItem('isAdmin');
     const userId = sessionStorage.getItem('userId');
+    const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId === userId));
 
     const handleKeyDown = (e) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
-
-    function userHasliked() {
-        if (post.likes > 0) {
-            if (post.PostLikes.userId == userId && post.PostLikes.postId == post.id) {
-                setUserLiked(true);
-                console.log(userLiked);
-            }
-        }
-    }
-
-    //console.log(usersWhosLiked);
-
-    console.log("userid", post.PostLikes.some(like => like.userId == userId));
-
 
     const updateComments = (updatedComments) => {
         setpostComments(updatedComments);
@@ -108,6 +93,11 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             .then(() => {
                 console.log(userLiked);
                 setUserLiked(!userLiked);
+                if (userLiked) {
+                    setlike(like - 1);
+                } else {
+                    setlike(like + 1);
+                }
             })
             .catch((err) => {
                 console.error(err)
@@ -154,7 +144,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
         >
             <div className="card-header">
                 <div className="card-header__imgContainer">
-                    <img className="card-header__imgContainer--img" src={post.User.attachment} />
+                    <img className="card-header__imgContainer--img" src={post.User.attachment} alt='user attachment' />
                 </div>
                 <div className="card-header__text">
                     <h3>{post.User.username}</h3>
@@ -205,7 +195,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                     </div>
                 )
                     : null}
-                {(isAdmin > 0 || userId == post.User.id) ? (
+                {(isAdmin > 0 || userId === post.User.id) ? (
                     <div className="btn-container">
                         {isEditing ? (
                             <button onClick={() => handleEdit()}>Valider</button>
@@ -227,11 +217,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                 ) : null}
                 <div className="postLike">
                     <button onClick={() => handleLike()}>
-                        <span>{post.likes}</span>
-                        {
-                            (post.PostLikes.userId == userId) ?
-                                setUserLiked(true) : console.log(post.PostLikes.userId)
-                        }
+                        <span>{like}</span>
                         <img src={userLiked ? "./icones/Liked.png" : "./icones/Like.png"} alt="like" />
                     </button>
                 </div>

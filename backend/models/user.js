@@ -15,7 +15,10 @@ const User = database.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/i
+        }
     },
     attachment: {
         type: DataTypes.STRING,

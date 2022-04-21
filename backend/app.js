@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
-//const userUpdateRoutes = require('./routes/userUpdate');
+const helmet = require("helmet");
 const commentRoutes = require('./routes/comment');
 
 const path = require('path');
@@ -16,6 +16,7 @@ connect()
     .catch(error => console.log(error));
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-//app.use('/api/user', userUpdateRoutes);
+
 app.use('/api/auth', userRoutes);
 
 

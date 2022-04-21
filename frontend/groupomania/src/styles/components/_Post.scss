@@ -23,6 +23,7 @@
       border: #00000075 solid 1px;
       margin-top: 5px;
       overflow: hidden;
+      flex-shrink: 0;
 
       &--img {
 
@@ -96,10 +97,6 @@
    }
 }
 
-.card-footer {
-   display: flex;
-}
-
 .btn-container {
    flex: 1;
    max-height: 36px;
@@ -107,6 +104,23 @@
 
    @include mobileS {
       margin-bottom: 50px;
+   }
+}
+
+.card-footer {
+   display: flex;
+   justify-content: flex-end;
+
+   &::after {
+      content: "";
+
+      display: block;
+      height: 2px;
+      background-color: $lightGrey3;
+
+      position: relative;
+      top: 0;
+      left: 0;
    }
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-const isAdmin = localStorage.getItem('isAdmin');
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 const Navigation2 = () => {
 
     const HandleLogout = () => {
-        localStorage.clear();
+        sessionStorage.clear();
     }
 
 

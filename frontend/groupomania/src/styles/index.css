@@ -14,7 +14,7 @@ button {
   min-width: 97px;
   height: 100%;
   margin-bottom: 24px;
-  margin: 10px;
+  margin: 4px;
   padding: 10px;
   cursor: pointer;
 }
@@ -39,17 +39,22 @@ ul {
 /*Media Queries - desktop*/
 /*Media Queries - Tablette*/
 /*Media Queries - Mobile*/
+/*Media Queries - MobileS*/
 .comments {
-  border: solid #F2F3F5 1px;
   background-color: #F2F3F5;
   border-radius: 16px;
   border-top: transparent;
-  width: 95%;
   height: 100%;
   margin: auto;
   margin-bottom: 5px;
   margin-top: 7px;
-  padding: 8px 10px 20px 20px;
+  padding: 0px 20px 10px 20px;
+}
+
+.comments textarea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
@@ -73,8 +78,7 @@ ul {
   margin: auto;
   width: 100%;
   height: 100%;
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 100%;
   margin-bottom: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -169,12 +173,12 @@ ul {
   cursor: pointer;
 }
 
-.postComment__Form--label {
-  padding-left: 10px;
+.postComment__Form--file:hover > span {
+  font-weight: 700;
 }
 
-.postComment__Form--label span:hover {
-  font-weight: 700;
+.postComment__Form--label {
+  padding-left: 10px;
 }
 
 .postComment__Form--labelIcone {
@@ -250,7 +254,6 @@ ul {
       -ms-flex-direction: row;
           flex-direction: row;
   max-width: 1280px;
-  width: 100%;
   margin: auto;
   padding: 15px;
   -ms-flex-wrap: wrap;
@@ -322,7 +325,7 @@ ul {
   height: 100%;
   margin-bottom: 24px;
   padding: 15px;
-  max-width: 1280px;
+  max-width: 720px;
   overflow: hidden;
 }
 
@@ -330,14 +333,44 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.card-header__imgContainer {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: #00000075 solid 1px;
+  margin-top: 5px;
+  overflow: hidden;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.card-header__imgContainer--img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.card-header__text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-top: -15px;
+  margin-left: 10px;
 }
 
 .card-header em {
-  margin-top: -10px;
+  margin-top: -15px;
   font-size: small;
 }
 
@@ -350,6 +383,8 @@ ul {
       -ms-flex-direction: column;
           flex-direction: column;
   text-overflow: ellipsis;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .card-body textarea,
@@ -401,10 +436,68 @@ ul {
 
 .card-attachement--img {
   height: 100%;
-  max-width: 200px;
+  max-width: 100%;
   width: 100%;
-  max-height: 200px;
   margin-bottom: 10px;
+}
+
+.btn-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  max-height: 36px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 347px) {
+  .btn-container {
+    margin-bottom: 50px;
+  }
+}
+
+.card-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.card-footer::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: #e6e6e6a4;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.postLike {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  margin-bottom: 5px;
+}
+
+.postLike button {
+  all: unset;
+  cursor: pointer;
+}
+
+.postLike button img {
+  width: 20px;
+  height: 20px;
+  margin-bottom: -3px;
+}
+
+.postLike button span {
+  font-size: large;
+  margin-right: 5px;
 }
 
 .homeForm {
@@ -454,7 +547,7 @@ ul {
           box-shadow: 0px 5px 15px 1px #7e7e7e2e;
   background-color: #87dbfa;
   width: 20%;
-  min-width: 97px;
+  min-width: 134px;
   height: 100%;
   font-size: large;
   font-weight: 700;
@@ -473,6 +566,13 @@ ul {
   max-width: 1440px;
   overflow: hidden;
   background-color: white;
+  padding-bottom: 50px;
+}
+
+.forum-container ul,
+.forum-container li {
+  padding: 0;
+  list-style-type: none;
 }
 
 .forum-container main {
@@ -515,7 +615,7 @@ ul {
   height: 100%;
   margin-bottom: 24px;
   padding: 15px;
-  max-width: 1280px;
+  max-width: 720px;
   overflow: hidden;
   display: block;
 }
@@ -559,6 +659,7 @@ ul {
   overflow: hidden;
   position: absolute;
   cursor: pointer;
+  margin: 0;
 }
 
 .forum-container__Form--label {
@@ -599,23 +700,13 @@ ul {
 
 .forum-container h1 {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .forum-container form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-.card-footer::after {
-  content: "";
-  display: block;
-  height: 2px;
-  background-color: #e6e6e6a4;
-  position: relative;
-  top: 0;
-  left: 0;
 }
 
 .user-header,
@@ -632,6 +723,8 @@ ul {
       -ms-flex-align: center;
           align-items: center;
   padding-bottom: 20px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .user-container {
@@ -644,6 +737,11 @@ ul {
   padding-left: 20px;
 }
 
+.user-container-left {
+  margin: auto;
+  width: 100%;
+}
+
 .user-container__box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -654,6 +752,23 @@ ul {
   margin-left: 20px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.user-container__box .userLabel {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-container__box button {
+  margin: 10px;
 }
 
 .user-container__box::before {
@@ -661,7 +776,7 @@ ul {
   display: block;
   width: 80%;
   height: 2px;
-  background-color: #F2F3F5;
+  background-color: #ebebeb;
   position: relative;
   top: 0;
   left: 0;
@@ -671,12 +786,32 @@ ul {
   .user-container__box {
     -ms-flex-pack: distribute;
         justify-content: space-around;
+    margin-left: 0;
   }
 }
 
 .user-container__box--info {
+  margin-right: 10px;
   margin-top: 5px;
   margin-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.user-container__box--infoSubDiv {
+  margin-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .user-container__box button {
@@ -684,6 +819,83 @@ ul {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  max-height: 36px;
+}
+
+.userImage__container {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: #00000075 solid 1px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.userImage__container--avatar {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.passwordInput {
+  margin-top: 15px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display: none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+  font-size: medium;
+}
+
+#message h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+#message p {
+  margin: 5px;
+  font-size: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10006;";
+}
+
+.adminTitle {
+  text-align: center;
 }
 
 .user-container__adminBox {
@@ -709,6 +921,7 @@ ul {
   -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
           box-shadow: 0px 5px 15px 1px #0000002e;
   padding-bottom: 15px;
+  width: 95%;
 }
 
 .user-container__admin h3,
@@ -729,6 +942,7 @@ ul {
       justify-content: space-around;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin: 10px;
 }
 
 .user-container__admin--grid button {

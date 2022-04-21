@@ -5,6 +5,7 @@
     //width: 100%;
     @include verticalCenter;
     padding-bottom: 20px;
+    flex-wrap: wrap;
 
 }
 
@@ -51,10 +52,11 @@
 
     @include mobile {
         justify-content: space-around;
+        margin-left: 0;
     }
 
     &--info {
-        margin-right: 75px;
+        margin-right: 10px;
         margin-top: 5px;
         margin-left: 10px;
         display: flex;

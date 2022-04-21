@@ -32,7 +32,7 @@ const Admin = () => {
                 <Navigation2 />
             </header>
             <div className="user-container__adminBox">
-                <h2>
+                <h2 className="adminTitle">
                     Liste des utilisateurs
                 </h2>
                 {usersData

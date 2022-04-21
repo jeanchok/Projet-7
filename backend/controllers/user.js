@@ -292,7 +292,7 @@ exports.getUser = (req, res, next) => {
 
 exports.getAllUsers = (req, res) => {
   User.findAll({
-    attributes: ['id', 'username', 'email']
+    attributes: ['id', 'username', 'email', 'isAdmin']
   })
     .then(
       (users) => {

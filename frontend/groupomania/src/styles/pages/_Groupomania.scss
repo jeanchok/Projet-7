@@ -104,24 +104,10 @@
 
     h1 {
         text-align: center;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
     }
 
     form {
         display: flex;
-    }
-}
-
-.card-footer {
-    &::after {
-        content: "";
-
-        display: block;
-        height: 2px;
-        background-color: $lightGrey3;
-
-        position: relative;
-        top: 0;
-        left: 0;
     }
 }

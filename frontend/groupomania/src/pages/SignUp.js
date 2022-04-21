@@ -18,65 +18,25 @@ const SignUp = () => {
     const HandleSignUp = (e) => {
         e.preventDefault();
 
-        email.setCustomValidity("");
-        username.setCustomValidity("");
-        password.setCustomValidity("");
 
-        if (email.validity.patternMissmatch) {
-            email.setCustomValidity(`Entrée invalide !`)
-            setError(true);
-        }
-        if (password.validity.patternMissmatch) {
-            password.setCustomValidity(`Veuillez rentrer un mot de passe avec au minimum une majuscule, une minuscule et un chiffre !`)
-            setError(true);
-        }
-        if (username.validity.patternMissmatch) {
-            username.setCustomValidity(`Entrée invalide !`)
-            setError(true);
-        }
-        if (password.validity.valueMissing) {
-            password.setCustomValidity("Veuillez remplir ce champ !")
-            setError(true);
-        }
-        if (username.validity.valueMissing) {
-            username.setCustomValidity("Veuillez remplir ce champ !")
-            setError(true);
-        }
-
-        if (email.validity.valueMissing) {
-            email.setCustomValidity("Veuillez remplir ce champ !")
-            setError(true);
-        }
-        if (username.validity.tooShort) {
-            username.setCustomValidity(`Veuillez entrer au moins ${username.minLength} caractères !`)
-            setError(true);
-        }
-        if (email.validity.tooShort) {
-            email.setCustomValidity(`Veuillez entrer au moins ${email.minLength} caractères !`)
-            setError(true);
-        }
-        if (password.validity.tooShort) {
-            password.setCustomValidity(`Veuillez entrer au moins ${password.minLength} caractères !`)
-            setError(true);
-        } else {
-            axios.post("http://localhost:3008/api/auth/signup", {
-                username: username,
-                email: email,
-                password: password
+        axios.post("http://localhost:3008/api/auth/signup", {
+            username: username,
+            email: email,
+            password: password
+        })
+            .then(() => {
+                setError(false);
+                setUsername("");
+                setPassword("");
+                setEmail("");
+                navigate(`/login`)
             })
-                .then(() => {
-                    setError(false);
-                    setUsername("");
-                    setPassword("");
-                    setEmail("");
-                    navigate(`/login`)
-                })
-                .catch(() => {
-                    setError(true);
-                }
-                )
+            .catch(() => {
+                setError(true);
+            }
+            )
 
-        }
+
     };
 
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const DisplayUsers = (user) => {
+const DisplayUsers = (user, usersData) => {
     const storedJwt = sessionStorage.getItem('token');
 
     const handleDelete = () => {

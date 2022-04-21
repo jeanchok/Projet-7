@@ -15,7 +15,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const [error, setError] = useState(false);
     const isAdmin = sessionStorage.getItem('isAdmin');
     const userId = sessionStorage.getItem('userId');
-    const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId === userId));
+    const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId == userId));
 
     const handleKeyDown = (e) => {
         e.target.style.height = 'inherit';
@@ -195,7 +195,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                     </div>
                 )
                     : null}
-                {(isAdmin > 0 || userId === post.User.id) ? (
+                {(isAdmin > 0 || userId == post.User.id) ? (
                     <div className="btn-container">
                         {isEditing ? (
                             <button onClick={() => handleEdit()}>Valider</button>

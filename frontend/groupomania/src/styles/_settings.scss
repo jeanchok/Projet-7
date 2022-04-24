@@ -25,6 +25,8 @@ $lightGrey3: #e6e6e6a4;
 $lightGrey4: #ebebeb;
 $brightRed : #ffdbdb;
 $brightRed2 : #ffc2c2;
+$darkRed : #ff0000;
+$darkRed2 :#800000;
 $blue : #87dbfa;
 $lightBlue : #c1eeff;
 $lightGrey2 : #F2F3F5;
@@ -40,7 +42,7 @@ button {
     border-radius: 16px;
     border-top: transparent;
     display: inline-block;
-    background-color: $brightRed;
+    background-color: $blue;
     width: 10%;
     min-width: 97px;
     height: 100%;
@@ -51,7 +53,7 @@ button {
 
     &:hover {
         box-shadow: 0px 6px 14px -6px #000000e3;
-        background: lighten($brightRed, 2%);
+        background: lighten($lightBlue, 2%);
     }
 
 }

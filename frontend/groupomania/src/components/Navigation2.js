@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-const isAdmin = sessionStorage.getItem('isAdmin');
+const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
 
 const Navigation2 = () => {
 
@@ -12,24 +12,32 @@ const Navigation2 = () => {
     return (
         <div className="navigation">
             <ul>
-                <NavLink to="/groupomania" className={(nav) => (nav.isActive ? "nav-active" : "")}>
-                    <li>Forum</li>
-                </NavLink>
-                <NavLink to="/user" className={(nav) => (nav.isActive ? "nav-active" : "")}>
-                    <li>Mon compte</li>
-                </NavLink>
-                {
-                    isAdmin ?
-                        <NavLink to="/admin" className={(nav) => (nav.isActive ? "nav-active" : "")}>
-                            <li>Administrer</li>
-                        </NavLink> : null
-                }
-                <NavLink
-                    to="/"
-                    className={(nav) => (nav.isActive ? "nav-active" : "")}
-                    onClick={() => HandleLogout()}>
-                    <li>Déconnexion</li>
-                </NavLink>
+                <li>
+                    <NavLink to="/groupomania" className={(nav) => (nav.isActive ? "nav-active" : "")}>
+                        <nav>Forum</nav>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/user" className={(nav) => (nav.isActive ? "nav-active" : "")}>
+                        <nav>Mon compte</nav>
+                    </NavLink>
+                </li>
+                <li>
+                    {
+                        isAdmin ?
+                            <NavLink to="/admin" className={(nav) => (nav.isActive ? "nav-active" : "")}>
+                                <nav>Administrer</nav>
+                            </NavLink> : null
+                    }
+                </li>
+                <li>
+                    <NavLink
+                        to="/"
+                        className={(nav) => (nav.isActive ? "nav-active" : "")}
+                        onClick={() => HandleLogout()}>
+                        <nav>Déconnexion</nav>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );

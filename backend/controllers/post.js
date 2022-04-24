@@ -87,7 +87,7 @@ exports.modifyPost = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (post.userId !== req.auth.userId && req.auth.isAdmin === false) {
+        if (post.userId !== req.auth.userId && !req.auth.isAdmin) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });

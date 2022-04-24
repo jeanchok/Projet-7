@@ -5,7 +5,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editCommenttAttachment, seteditCommenttAttachment] = useState("");
-    const isAdmin = sessionStorage.getItem('isAdmin');
+    const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     const userId = sessionStorage.getItem('userId');
 
     let manageComment;
@@ -14,8 +14,6 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     if (isAdmin || userId == comments.userId) {
         manageComment = true;
     }
-
-
 
 
     const dateFormater = (date) => {
@@ -78,7 +76,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
         >
             <div className="card-header">
                 <div className="card-header__imgContainer">
-                    <img className="card-header__imgContainer--img" src={comments.User.attachment} />
+                    <img className="card-header__imgContainer--img" src={comments.User.attachment} alt={comments.User.username + ' avatar'} />
                 </div>
                 <div className="card-header__text">
                     <h3>{comments.User.username}</h3>
@@ -95,7 +93,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
                 <p>{editContent ? editContent : comments.content}</p>
             )}
             {
-                (comments.attachment == 'null') ? null : <img className="imgComment" src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment2" />
+                (comments.attachment == 'null') ? null : <img className="imgComment" src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment" />
             }
             {isEditing ? (
                 <div className="forum-container__Form--box">

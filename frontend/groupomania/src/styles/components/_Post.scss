@@ -59,6 +59,7 @@
    input {
       border: 1px solid rgb(97, 218, 251);
       border-radius: 4px;
+      margin-top: 10px;
    }
 
    &__title {
@@ -110,6 +111,7 @@
 .card-footer {
    display: flex;
    justify-content: flex-end;
+   flex-direction: column;
 
    &::after {
       content: "";

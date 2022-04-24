@@ -9,6 +9,7 @@ import axios from "axios";
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [jwt, setJwt] = useState("");
     const [error, setError] = useState(false);
     const navigate = useNavigate();
@@ -20,7 +21,6 @@ const Login = () => {
                 username: username,
                 password: password
             })
-            .catch((error) => console.log(`Erreur : ` + error))
             .then((res) => {
                 if (!res) {
                     window.location.reload();
@@ -31,6 +31,25 @@ const Login = () => {
                     sessionStorage.setItem('isAdmin', res.data.isAdmin);
                     setJwt(res.data.token);
                     window.location.href = "/groupomania";
+                }
+
+            })
+            .catch((error) => {
+                console.log(`Erreur : ` + error);
+                if (error.response.status === 401) {
+                    setErrorMessage("Votre mot de passe ou votre nom d'utilisateur est incorrect");
+                }
+                if (error.response.status === 400) {
+                    setErrorMessage("Votre mot de passe ou votre nom d'utilisateur est incorrect");
+                }
+                if (error.response.status === 500) {
+                    setErrorMessage("Une erreur est survenue, veuillez réessayer plus tard");
+                }
+                if (error.response.status === 404) {
+                    setErrorMessage("Une erreur est survenue, veuillez réessayer plus tard");
+                }
+                if (error.response.status === 429) {
+                    setErrorMessage("Trop de tentatives de connexion. Veuillez réessayer dans quelques minutes");
                 }
 
             })
@@ -65,6 +84,7 @@ const Login = () => {
                     />
                 </label>
                 <input className="homeSubmit" type="submit" value="Se connecter" />
+                <h4 className="errorMessage">{errorMessage}</h4>
             </form>
         </div>
 

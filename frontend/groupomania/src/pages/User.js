@@ -197,7 +197,6 @@ const User = () => {
                                 }}>Annuler</button>
                             </div> :
                             <button onClick={() => setIsPictureEditing(!isPictureEditing)}>Modifier</button>
-
                         }
                     </div>
                     {errorAttachment && <p>Veuillez choisir une image au format PNG, JPEG ou JPG.</p>}
@@ -207,7 +206,7 @@ const User = () => {
                             {isMailEditing ? (
                                 <div>
                                     <p>{userData.email}</p>
-                                    <form onSubmit={(e) => HandleEmailUpdate(e)}>
+                                    <form>
                                         <label>
                                             <input
                                                 type="email"
@@ -218,15 +217,19 @@ const User = () => {
                                                 required
                                             />
                                         </label>
-                                        <input type="submit" value="Enregister" />
                                     </form>
                                 </div>) : (<p>{editEmail ? editEmail : userData.email}</p>)}
-
                         </div>
-                        {isMailEditing ? <button onClick={() => {
-                            setIsMailEditing(!isMailEditing);
-                            setErrorEmail(false);
-                        }}>Annuler</button> : <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>}
+                        {isMailEditing ?
+                            <div className="user-container__box--edit">
+                                {email ? <button onClick={(e) => HandleEmailUpdate(e)}>Valider</button> : null}
+                                <button onClick={() => {
+                                    setIsMailEditing(!isMailEditing);
+                                    setErrorEmail(false);
+                                }}>Annuler</button>
+                            </div> :
+                            <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>
+                        }
                     </div>
                     {errorEmail && <p>Veuillez choisir une adresse e-mail unique.</p>}
                     <div className="user-container__box">
@@ -235,7 +238,7 @@ const User = () => {
                             {isUsernameEditing ? (
                                 <div>
                                     <p>{userData.username}</p>
-                                    <form onSubmit={(e) => HandleUsernameUpdate(e)}>
+                                    <form>
                                         <label>
                                             <input
                                                 type="text"
@@ -247,14 +250,19 @@ const User = () => {
                                                 required
                                             />
                                         </label>
-                                        <input type="submit" value="Enregister" />
                                     </form>
                                 </div>) : (<p>{userData.username}</p>)}
                         </div>
-                        {isUsernameEditing ? <button onClick={() => {
-                            setIsUsernameEditing(!isUsernameEditing);
-                            setErrorUsername(false);
-                        }}>Annuler</button> : <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>}
+                        {isUsernameEditing ?
+                            <div className="user-container__box--edit">
+                                {username ? <button onClick={(e) => HandleUsernameUpdate(e)}>Valider</button> : null}
+                                <button onClick={() => {
+                                    setIsUsernameEditing(!isUsernameEditing);
+                                    setErrorUsername(false);
+                                }}>Annuler</button>
+                            </div> :
+                            <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>
+                        }
                     </div>
                     {errorUsername && <p>Veuillez choisir un nom d'utilisateur unique.</p>}
 
@@ -263,7 +271,7 @@ const User = () => {
                         <div className="user-container__box--info">
                             {isPasswordEditing ? (
                                 <div className="passwordInput">
-                                    <form onSubmit={(e) => HandlePasswordUpdate(e)}>
+                                    <form>
                                         <label>
                                             <input
 
@@ -276,15 +284,19 @@ const User = () => {
                                                 title="Doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule"
                                             />
                                         </label>
-                                        <input type="submit" value="Enregister" />
                                     </form>
                                 </div>) : (<p></p>)}
                         </div>
-                        {isPasswordEditing ? <button onClick={() => {
-                            setIsPasswordEditing(!isPasswordEditing);
-                            setErrorPassword(false);
+                        {isPasswordEditing ?
+                            <div className="user-container__box--edit">
+                                {password ? <button onClick={(e) => HandlePasswordUpdate(e)}>Valider</button> : null}
+                                <button onClick={() => {
+                                    setIsPasswordEditing(!isPasswordEditing);
+                                    setErrorPassword(false);
+                                }}>Annuler</button>
+                            </div> :
+                            <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>
                         }
-                        }>Annuler</button> : <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>}
                     </div>
                     {errorPassword && <p>Votre mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule.</p>}
                 </div>

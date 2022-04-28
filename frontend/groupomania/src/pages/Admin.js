@@ -8,6 +8,7 @@ const Admin = () => {
     const storedJwt = sessionStorage.getItem('token');
     const [usersData, setUsersData] = useState([]);
 
+    // Get all users for admin
     const getUsersData = () => {
         axios
             .get('http://localhost:3008/api/auth/', {
@@ -23,7 +24,7 @@ const Admin = () => {
 
 
 
-    useEffect(() => getUsersData(), []);
+    useEffect(() => getUsersData());
 
     return (
         <div className="forum-container">
@@ -35,6 +36,8 @@ const Admin = () => {
                 <h2 className="adminTitle">
                     Liste des utilisateurs
                 </h2>
+
+                {/* {Display all users} */}
                 {usersData
                     .map((user) => (
                         <DisplayUsers key={user.id} user={user} getUsersData={getUsersData} />

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 
-const DisplayUsers = (user, usersData) => {
+const DisplayUsers = (user) => {
     const storedJwt = sessionStorage.getItem('token');
 
+    // Delete user for Admin
     const handleDelete = () => {
         axios.delete("http://localhost:3008/api/auth/delete/" + user.user.id, {
             headers: {

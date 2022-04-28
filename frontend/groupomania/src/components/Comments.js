@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -8,14 +8,13 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
     const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     const userId = sessionStorage.getItem('userId');
 
+    // Allow user to manage comments
     let manageComment;
-
-
     if (isAdmin || userId == comments.userId) {
         manageComment = true;
     }
 
-
+    // date format
     const dateFormater = (date) => {
         let newDate = new Date(date).toLocaleDateString("fr-FR", {
             year: "numeric",
@@ -28,6 +27,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
         return newDate;
     };
 
+    // Edit comment
     const handleEdit = () => {
 
         let content = editContent ? editContent : comments.content;
@@ -51,6 +51,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
             })
     };
 
+    // Delete comment
     const handleDelete = () => {
         axios.delete("http://localhost:3008/api/comment/" + comments.id, {
             headers: {

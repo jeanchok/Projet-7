@@ -16,16 +16,20 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     const userId = sessionStorage.getItem('userId');
     const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId == userId));
+    const [errorImageFormat, setErrorImageFormat] = useState(false);
 
+    // Textearea get larger when user is typing
     const handleKeyDown = (e) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
 
+    // udpate comment
     const updateComments = (updatedComments) => {
         setpostComments(updatedComments);
     };
 
+    // Date format
     const dateFormater = (date) => {
         let newDate = new Date(date).toLocaleDateString("fr-FR", {
             year: "numeric",
@@ -38,6 +42,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
         return newDate;
     };
 
+    // Update post
     const handleEdit = () => {
 
         let title = editTitle ? editTitle : post.title;
@@ -65,6 +70,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             })
     };
 
+    // Delete post
     const handleDelete = () => {
         axios.delete("http://localhost:3008/api/post/" + post.id, {
             headers: {
@@ -79,6 +85,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             })
     };
 
+    // Like a post
     const handleLike = () => {
         axios
             .post(`http://localhost:3008/api/post/${post.id}/like`, {
@@ -105,8 +112,16 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
 
     };
 
+    // Add a comment
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+
+        if (!MIME_TYPES.includes(commentAttachment.type)) {
+            setErrorImageFormat(true);
+            return;
+        }
 
 
         if (commentContent.length < 1) {
@@ -249,7 +264,8 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
                         {commentAttachment ? <span>Fichier choisit : {commentAttachment.name}</span> : <span>Choisir un fichier</span>}
                     </label>
                 </div>
-                {error && <p>Veuillez écrire un minimum de 5 caractères</p>}
+                {error && <p className="error">Veuillez écrire un minimum de 5 caractères</p>}
+                {errorImageFormat && <p className="error">Le fichier n'est pas une image</p>}
                 <input className="postComment__submit" type="submit" value="Envoyer" />
             </form>
         </div>

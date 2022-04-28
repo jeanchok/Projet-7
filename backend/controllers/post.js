@@ -35,7 +35,7 @@ exports.createPost = (req, res, next) => {
 exports.getAllPosts = (req, res) => {
   Post.findAll({
     include: [
-      { model: PostLikes /*, include: [{ model: User, Post }] */ },
+      { model: PostLikes },
       { model: User, attributes: ['id', 'username', 'attachment'] },
       { model: Comment, include: [{ model: User, attributes: ['id', 'username', 'attachment'] }] }
 

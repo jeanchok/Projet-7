@@ -15,6 +15,8 @@ const SignUp = () => {
     const [error, setError] = useState(false);
     const navigate = useNavigate();
 
+
+    // Sign up
     const HandleSignUp = (e) => {
         e.preventDefault();
 

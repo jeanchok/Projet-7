@@ -8,8 +8,6 @@ const User = () => {
     const storedJwt = sessionStorage.getItem('token');
     const userId = sessionStorage.getItem('userId');
     const [email, setEmail] = useState("");
-    const [editEmail, seteditEmail] = useState("");
-    const [editAttachment, seteditAttachment] = useState("");
     const [fileToUpload, setFileToUpload] = useState(null);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -23,6 +21,7 @@ const User = () => {
     const [isPasswordEditing, setIsPasswordEditing] = useState(false);
     const [isUsernameEditing, setIsUsernameEditing] = useState(false);
 
+    // Delete user account
     const handleDelete = () => {
         axios.delete("http://localhost:3008/api/auth/delete/" + userId, {
             headers: {
@@ -34,6 +33,7 @@ const User = () => {
     };
     useEffect(() => getDataUser(), []);
 
+    // Get user data
     const getDataUser = () => {
         axios
             .get("http://localhost:3008/api/auth/" + userId, {
@@ -48,7 +48,15 @@ const User = () => {
             })
     };
 
+    // Update user Avatar
     const HandlePictureUpdate = (e) => {
+        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+
+        if (!MIME_TYPES.includes(fileToUpload.type)) {
+            setErrorAttachment(true);
+            return;
+        }
+
         const userAttachement = new FormData();
         userAttachement.append("attachment", fileToUpload);
 
@@ -72,6 +80,7 @@ const User = () => {
             })
     };
 
+    // Update user mail
     const HandleEmailUpdate = (e) => {
         e.preventDefault();
         axios
@@ -96,6 +105,7 @@ const User = () => {
             })
     };
 
+    // Update user name
     const HandleUsernameUpdate = (e) => {
         e.preventDefault();
         axios.put("http://localhost:3008/api/auth/username/" + userId, {
@@ -118,6 +128,7 @@ const User = () => {
     };
 
 
+    // Update user password
     const HandlePasswordUpdate = (e) => {
         e.preventDefault();
         axios.put("http://localhost:3008/api/auth/password/" + userId, {
@@ -165,7 +176,7 @@ const User = () => {
                             {isPictureEditing ? (
                                 <div className="user-container__box--infoSubDiv">
                                     <div className="userImage__container">
-                                        <img className="userImage__container--avatar" src={editAttachment ? editAttachment : userData.attachment} alt="avatar" />
+                                        <img className="userImage__container--avatar" src={userData.attachment} alt="avatar" />
                                     </div>
 
                                     <div className="forum-container__Form--box userLabel">
@@ -183,7 +194,7 @@ const User = () => {
                                 </div>
                             ) : (
                                 <div className="userImage__container">
-                                    <img className="userImage__container--avatar" src={editAttachment ? editAttachment : userData.attachment} alt="avatar" />
+                                    <img className="userImage__container--avatar" src={userData.attachment} alt="avatar" />
                                 </div>
                             )}
                         </div>
@@ -218,7 +229,7 @@ const User = () => {
                                             />
                                         </label>
                                     </form>
-                                </div>) : (<p>{editEmail ? editEmail : userData.email}</p>)}
+                                </div>) : (<p>{userData.email}</p>)}
                         </div>
                         {isMailEditing ?
                             <div className="user-container__box--edit">

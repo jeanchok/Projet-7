@@ -1,38 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navigation from '../components/Navigation';
 import Logo from '../components/Logo';
-import {
-    useNavigate
-} from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [jwt, setJwt] = useState("");
-    const [error, setError] = useState(false);
-    const navigate = useNavigate();
 
+    // Login
     const HandleLogin = (e) => {
         e.preventDefault();
         axios
             .post('http://localhost:3008/api/auth/login', {
                 username: username,
                 password: password
-            })
-            .then((res) => {
-                if (!res) {
-                    window.location.reload();
-                } else {
-
-                    sessionStorage.setItem('token', res.data.token);
-                    sessionStorage.setItem('userId', res.data.userId);
-                    sessionStorage.setItem('isAdmin', res.data.isAdmin);
-                    setJwt(res.data.token);
-                    window.location.href = "/groupomania";
-                }
-
             })
             .catch((error) => {
                 console.log(`Erreur : ` + error);
@@ -53,6 +35,19 @@ const Login = () => {
                 }
 
             })
+            .then((res) => {
+                if (!res) {
+                    window.location.reload();
+                } else {
+
+                    sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('userId', res.data.userId);
+                    sessionStorage.setItem('isAdmin', res.data.isAdmin);
+                    window.location.href = "/groupomania";
+                }
+
+            })
+
     }
 
 

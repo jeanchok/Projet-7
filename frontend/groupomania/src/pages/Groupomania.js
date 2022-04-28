@@ -12,6 +12,7 @@ const Groupomania = () => {
     const [title, setTitle] = useState("");
     const [attachment, setAttachment] = useState(null);
     const [error, setError] = useState(false);
+    const [errorImageFormat, setErrorImageFormat] = useState(false);
     const storedJwt = sessionStorage.getItem('token');
 
 
@@ -49,6 +50,13 @@ const Groupomania = () => {
     // Add a Post
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+
+        if (!MIME_TYPES.includes(attachment.type)) {
+            setErrorImageFormat(true);
+            return;
+        }
 
         if (content.length < 1) {
             setError(true);
@@ -111,7 +119,8 @@ const Groupomania = () => {
                             {attachment ? <span>Fichier choisit : {attachment.name}</span> : <span>Choisir un fichier</span>}
                         </label>
                     </div>
-                    {error && <p>Veuillez écrire un minimum de 5 caractères</p>}
+                    {errorImageFormat ? <p className="forum-container__Form--error">Votre image doit être au format jpg, jpeg ou png</p> : null}
+                    {error && <p className="forum-container__Form--error">Veuillez écrire un minimum de 5 caractères</p>}
                     <input className="forum-container__Form--submit" type="submit" value="Poster" />
                 </form>
                 <ul>

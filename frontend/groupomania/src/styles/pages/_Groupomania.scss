@@ -99,6 +99,10 @@
                 background: lighten($blue, 4%);
             }
         }
+
+        &--error {
+            color: $darkRed;
+        }
     }
 
 

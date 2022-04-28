@@ -8,7 +8,11 @@ const MIME_TYPES = {
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, 'images');
+    if (req.originalUrl.includes('/api/auth/avatar/')) {
+      callback(null, 'images/UserImage');
+    } else {
+      callback(null, 'images');
+    };
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(' ').join('_');

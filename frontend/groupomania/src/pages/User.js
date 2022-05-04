@@ -50,7 +50,7 @@ const User = () => {
 
     // Update user Avatar
     const HandlePictureUpdate = (e) => {
-        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        const MIME_TYPES = ["image/webp", "image/bmp", "image/png", "image/jpeg", "image/jpg"];
 
         if (fileToUpload && !MIME_TYPES.includes(fileToUpload.type)) {
             setErrorAttachment(true);

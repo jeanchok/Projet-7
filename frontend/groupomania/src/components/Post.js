@@ -116,7 +116,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        const MIME_TYPES = ["image/webp", "image/bmp", "image/png", "image/jpeg", "image/jpg", 'image/gif'];
 
         if (commentAttachment && !MIME_TYPES.includes(commentAttachment.type)) {
             setErrorImageFormat(true);

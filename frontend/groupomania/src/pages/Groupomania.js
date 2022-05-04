@@ -51,7 +51,7 @@ const Groupomania = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
+        const MIME_TYPES = ["image/webp", "image/bmp", "image/png", "image/jpeg", "image/jpg", 'image/gif'];
 
         if (attachment && !MIME_TYPES.includes(attachment.type)) {
             setErrorImageFormat(true);

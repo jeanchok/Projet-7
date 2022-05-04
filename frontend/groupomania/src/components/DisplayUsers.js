@@ -24,7 +24,7 @@ const DisplayUsers = (user) => {
     return (
         <div className="user-container__admin">
             <div className="user-container__admin--grid">
-                <div className="user-container__box">
+                <div className="user-container__box" id="emailAdmin">
                     <h3>Adresse e-mail :</h3>
                     <div className="user-container__box--info">
                         <p>{user.user.email}</p>

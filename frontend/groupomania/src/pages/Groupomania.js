@@ -53,8 +53,9 @@ const Groupomania = () => {
 
         const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
-        if (!MIME_TYPES.includes(attachment.type)) {
+        if (attachment && !MIME_TYPES.includes(attachment.type)) {
             setErrorImageFormat(true);
+            setAttachment(null);
             return;
         }
 
@@ -78,6 +79,7 @@ const Groupomania = () => {
             setContent("");
             setTitle("");
             setAttachment(null);
+            setErrorImageFormat(false);
         }
     };
 

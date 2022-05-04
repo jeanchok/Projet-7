@@ -1,3 +1,4 @@
+// User infos page
 .user-header,
 .user-container {
     margin: auto;
@@ -29,6 +30,11 @@
     margin-left: 20px;
     flex-wrap: wrap;
     margin-bottom: 12px;
+
+    @include mobile {
+        justify-content: center;
+    }
+
 
     .userLabel {
         @include verticalCenter;

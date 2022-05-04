@@ -52,8 +52,9 @@ const User = () => {
     const HandlePictureUpdate = (e) => {
         const MIME_TYPES = ["image/png", "image/jpeg", "image/jpg"];
 
-        if (!MIME_TYPES.includes(fileToUpload.type)) {
+        if (fileToUpload && !MIME_TYPES.includes(fileToUpload.type)) {
             setErrorAttachment(true);
+            setFileToUpload(null);
             return;
         }
 

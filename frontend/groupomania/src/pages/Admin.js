@@ -24,7 +24,7 @@ const Admin = () => {
 
 
 
-    useEffect(() => getUsersData());
+    useEffect(() => getUsersData(), []);
 
     return (
         <div className="forum-container">

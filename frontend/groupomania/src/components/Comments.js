@@ -115,7 +115,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
                     {isEditing ? (
                         <button onClick={() => handleEdit()}>Valider</button>
                     ) : (
-                        <button onClick={() => setIsEditing(true)}>Edit</button>
+                        <button onClick={() => setIsEditing(true)}>Editer</button>
                     )}
                     <button
                         onClick={() => {

@@ -37,9 +37,8 @@ const Login = () => {
             })
             .then((res) => {
                 if (!res) {
-                    window.location.reload();
+                    return;
                 } else {
-
                     sessionStorage.setItem('token', res.data.token);
                     sessionStorage.setItem('userId', res.data.userId);
                     sessionStorage.setItem('isAdmin', res.data.isAdmin);
@@ -79,7 +78,7 @@ const Login = () => {
                     />
                 </label>
                 <input className="homeSubmit" type="submit" value="Se connecter" />
-                <h4 className="errorMessage">{errorMessage}</h4>
+                <h3 className="errorMessage">{errorMessage}</h3>
             </form>
         </div>
 

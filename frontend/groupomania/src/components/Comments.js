@@ -80,7 +80,7 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
                     <img className="card-header__imgContainer--img" src={comments.User.attachment} alt={comments.User.username + ' avatar'} />
                 </div>
                 <div className="card-header__text">
-                    <h3>{comments.User.username}</h3>
+                    <strong>{comments.User.username}</strong>
                     <em>commenté le {dateFormater(comments.createdAt)}</em>
                 </div>
             </div>

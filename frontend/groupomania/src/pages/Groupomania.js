@@ -45,7 +45,9 @@ const Groupomania = () => {
         setForumData(updatedPost)
     };
 
-    useEffect(() => getData(), []);
+    useEffect(() => getData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        , []);
 
     // Add a Post
     const handleSubmit = (e) => {
@@ -136,7 +138,7 @@ const Groupomania = () => {
                         {forumData
                             .sort((a, b) => b.date - a.date)
                             .map((post) => (
-                                <Post key={post.id} post={post} storedJwt={storedJwt} getData={getData} comments={post.comments} updatePost={updatePost} forumData={forumData} />
+                                <Post key={post.id} post={post} storedJwt={storedJwt} comments={post.comments} updatePost={updatePost} forumData={forumData} />
                             ))
                         }
                     </li>

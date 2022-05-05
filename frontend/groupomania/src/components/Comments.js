@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
+const Comments = ({ comments, storedJwt, post, updateComments }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editCommenttAttachment, seteditCommenttAttachment] = useState("");
@@ -60,7 +60,6 @@ const Comments = ({ comments, storedJwt, getData, post, updateComments }) => {
         })
             .then((result) => {
                 updateComments(post.Comments.filter((comment) => comment.id !== result.data.comment.id));
-                getData();
             })
             .catch((err) => {
                 console.error(err)

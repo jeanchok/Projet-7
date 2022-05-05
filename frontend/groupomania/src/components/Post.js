@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Comments from "./Comments";
 
-const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
+const Post = ({ post, storedJwt, updatePost, forumData }) => {
     const [like, setlike] = useState(post.likes);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
@@ -245,7 +245,7 @@ const Post = ({ post, storedJwt, getData, updatePost, forumData }) => {
             {postComments
                 .sort((a, b) => b.date - a.date)
                 .map((comments) => (
-                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} getData={getData} post={post} updateComments={updateComments} />
+                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} post={post} updateComments={updateComments} />
                 ))
             }
 

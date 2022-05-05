@@ -25,8 +25,7 @@
     }
 
     p {
-        text-overflow: ellipsis;
-        overflow: hidden;
+        overflow-wrap: break-word;
     }
 
     .imgComment {

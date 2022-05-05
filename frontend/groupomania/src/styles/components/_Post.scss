@@ -80,8 +80,7 @@
 
    h2,
    p {
-      text-overflow: ellipsis;
-      overflow: hidden;
+      overflow-wrap: break-word;
    }
 
    p {

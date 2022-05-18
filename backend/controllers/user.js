@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const fs = require('fs');
 
+// SignUp controller
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -18,6 +19,7 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// Login controller
 exports.login = (req, res, next) => {
   User.findOne({ where: { username: req.body.username } })
     .then(user => {
@@ -44,6 +46,7 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// Delete user controller
 exports.deleteUser = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -67,55 +70,7 @@ exports.deleteUser = (req, res, next) => {
     });
 };
 
-exports.modifyUser = (req, res, next) => {
-  User.findOne({ where: { id: req.params.id } })
-    .then(
-      (user) => {
-        if (!user) {
-          res.status(404).json({
-            error: new Error('No such Thing!')
-          });
-        }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
-          res.status(400).json({
-            error: new Error('Unauthorized request!')
-          });
-        }
-        if (req.body.password) {
-          bcrypt.hash(req.body.password, 10)
-            .then(hash => {
-              const userObject = {
-                username: req.body.username,
-                email: req.body.email,
-                password: hash
-              }
-            });
-        } else {
-          const userObject = {
-            username: req.body.username,
-            email: req.body.email
-          }
-        }
-        user.update({ ...userObject }, { where: { id: req.params.id } })
-          .then(() => {
-            res.status(201).json({
-              message: 'Post modified !', userObject
-            });
-          }
-          )
-          .catch(
-            (error) => {
-              res.status(400).json({
-                error: error, ...userObject
-              });
-            }
-          );
-      })
-    .catch(error => {
-      res.status(500).json({ error })
-    })
-};
-
+// Modify user Avatar controller
 exports.modifyUserAvatar = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -159,6 +114,7 @@ exports.modifyUserAvatar = (req, res, next) => {
     );
 };
 
+// Modify user name controller
 exports.modifyUsername = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -195,6 +151,7 @@ exports.modifyUsername = (req, res, next) => {
     );
 };
 
+// Modify user email controller
 exports.modifyUserEmail = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -231,6 +188,7 @@ exports.modifyUserEmail = (req, res, next) => {
     );
 };
 
+// Modify user password controller
 exports.modifyUserPassword = (req, res, next) => {
   User.findOne({ where: { id: req.params.id } })
     .then(
@@ -272,6 +230,7 @@ exports.modifyUserPassword = (req, res, next) => {
     );
 };
 
+// Get one user controller
 exports.getUser = (req, res, next) => {
   User.findOne(({ where: { id: req.params.id } }), {
     attributes: ['id', 'username', 'email']
@@ -290,6 +249,7 @@ exports.getUser = (req, res, next) => {
     );
 };
 
+// Get all users controller
 exports.getAllUsers = (req, res) => {
   User.findAll({
     attributes: ['id', 'username', 'email', 'isAdmin']

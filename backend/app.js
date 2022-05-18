@@ -7,7 +7,7 @@ const commentRoutes = require('./routes/comment');
 
 const path = require('path');
 
-
+// Connection to database and initializing Sequelize
 const { connect } = require('./models/database');
 const { loadModel } = require('./models/index');
 
@@ -15,13 +15,16 @@ connect()
     .then(() => loadModel())
     .catch(error => console.log(error));
 
+
 const app = express();
+
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
+// setting headers to avoid CORS errors
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

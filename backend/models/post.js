@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { database } = require('./database');
 
-
+// Initialize Model Post
 const Post = database.define('Post', {
     title: {
         type: DataTypes.STRING,

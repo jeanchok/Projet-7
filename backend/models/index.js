@@ -4,6 +4,7 @@ const Comment = require('./Comment');
 const PostLikes = require('./PostLikes');
 const { database } = require('./database');
 
+// Initialize Database Relations
 const loadModel = async () => {
     Post.belongsTo(User, { foreignKey: 'userId', onDelete: 'cascade' });
     Comment.belongsTo(User, { foreignKey: 'userId', onDelete: 'cascade' });

@@ -6,6 +6,7 @@ const multer = require('../middleware/multer-config');
 const password = require("../middleware/password");
 const loginlimiter = require('../middleware/loginLimiter');
 
+// Initialize Routes for User
 router.post('/signup', password, userCtrl.signup);
 router.put('/email/:id', auth, userCtrl.modifyUserEmail);
 router.put('/avatar/:id', auth, multer, userCtrl.modifyUserAvatar);

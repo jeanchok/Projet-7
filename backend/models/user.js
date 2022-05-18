@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { database } = require('./database');
 
-
+// Initialize Model User
 const User = database.define('User', {
     username: {
         type: DataTypes.STRING,

@@ -1,5 +1,6 @@
 const multer = require('multer');
 
+// Initialize Multer Config for Uploading Files
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',

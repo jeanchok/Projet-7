@@ -13,6 +13,7 @@ const SignUp = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+    const [error2, setError2] = useState(false);
     const navigate = useNavigate();
 
 
@@ -28,13 +29,19 @@ const SignUp = () => {
         })
             .then(() => {
                 setError(false);
+                setError2(false);
                 setUsername("");
                 setPassword("");
                 setEmail("");
                 navigate(`/login`)
             })
             .catch(() => {
-                setError(true);
+                if (error.response.status === 400) {
+                    setError(true);
+                }
+                if (error.response.status === 500) {
+                    setError2(true);
+                }
             }
             )
 
@@ -90,6 +97,7 @@ const SignUp = () => {
                     />
                 </label>
                 {error && <p>Veuillez choisir un nom d'utilisateur et une adresse e-mail unique.</p>}
+                {error2 && <p>Oups... Un problème est survenu.</p>}
                 <input className="homeSubmit" type="submit" value="S'enregister" />
             </form>
         </div>

@@ -3,6 +3,7 @@ const { Post, User, Comment, PostLikes } = require('../models/index');
 const fs = require('fs');
 const { parse } = require('path');
 
+// Create a new post controller
 exports.createPost = (req, res, next) => {
   const postObject = req.file ?
     {
@@ -32,6 +33,8 @@ exports.createPost = (req, res, next) => {
     );
 };
 
+
+// Get all posts controller
 exports.getAllPosts = (req, res) => {
   Post.findAll({
     include: [
@@ -55,6 +58,7 @@ exports.getAllPosts = (req, res) => {
     );
 };
 
+// Get a single post controller
 exports.getOnePost = (req, res, next) => {
   Post.findOne(({ where: { id: req.params.id } }), {
     include: [
@@ -78,6 +82,7 @@ exports.getOnePost = (req, res, next) => {
     );
 };
 
+// Modify a post controller
 exports.modifyPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then(
@@ -116,6 +121,7 @@ exports.modifyPost = (req, res, next) => {
     )
 };
 
+// Delete a post controller
 exports.deletePost = (req, res, next) => {
   Post.findOne({ where: { id: req.params.id } }, {
     include: [
@@ -152,6 +158,7 @@ exports.deletePost = (req, res, next) => {
 
 };
 
+// Like a post controller
 exports.likePost = (req, res, next) => {
   let like = req.body.like
   let userId = req.body.userId
@@ -176,8 +183,6 @@ exports.likePost = (req, res, next) => {
             userId: req.auth.userId,
           });
           postLikes.save()
-          // .then(() => res.status(200).json({ message: `J'aime` }))
-          // .catch((error) => res.status(400).json({ error }))
           break;
 
         case false:
@@ -194,8 +199,6 @@ exports.likePost = (req, res, next) => {
                   });
                 }
                 postLikes.destroy()
-                // .then(() => res.status(200).json({ message: 'User deleted !' }))
-                // .catch(error => res.status(400).json({ error }))
               })
             .catch(error => {
               res.status(500).json({ error })

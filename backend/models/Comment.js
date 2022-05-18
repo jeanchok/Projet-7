@@ -1,14 +1,14 @@
-const {DataTypes} = require('sequelize');
-const {database} = require('./database');
+const { DataTypes } = require('sequelize');
+const { database } = require('./database');
 
-
-const Comment = database.define('Comment',{
-    content : {
-        type : DataTypes.STRING,
-        allowNull : false
+// Initialize Model Comment
+const Comment = database.define('Comment', {
+    content: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    attachment : {
-        type : DataTypes.STRING,
+    attachment: {
+        type: DataTypes.STRING,
     }
 });
 

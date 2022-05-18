@@ -31,7 +31,9 @@ const User = () => {
             .then(() => window.location.href = "/")
 
     };
-    useEffect(() => getDataUser(), []);
+    useEffect(() => getDataUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        , []);
 
     // Get user data
     const getDataUser = () => {

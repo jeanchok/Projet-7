@@ -35,17 +35,14 @@ const SignUp = () => {
                 setEmail("");
                 navigate(`/login`)
             })
-            .catch(() => {
-                if (error.response.status === 400) {
+            .catch((error) => {
+                if (error.response.status == 400) {
                     setError(true);
                 }
-                if (error.response.status === 500) {
+                if (error.response.status == 500) {
                     setError2(true);
                 }
-            }
-            )
-
-
+            })
     };
 
 
@@ -93,6 +90,7 @@ const SignUp = () => {
                         required
                         minLength={8}
                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        autoComplete="off"
                         title="Doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule"
                     />
                 </label>

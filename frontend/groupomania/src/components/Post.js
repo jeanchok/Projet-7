@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Comments from "./Comments";
 
-const Post = ({ post, storedJwt, updatePost, forumData }) => {
+const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
     const [like, setlike] = useState(post.likes);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
@@ -64,6 +64,9 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
             .then((result) => {
                 seteditPostAttachment(result.data.postObject.attachment);
                 setIsEditing(false);
+                if (fileToUpdate) {
+                    getData();
+                }
             })
             .catch((err) => {
                 console.error(err)
@@ -98,8 +101,8 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
                     }
                 })
             .then(() => {
-                console.log(userLiked);
                 setUserLiked(!userLiked);
+                console.log(userLiked, post.id);
                 if (userLiked) {
                     setlike(like - 1);
                 } else {
@@ -124,8 +127,7 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
             return;
         }
 
-
-        if (commentContent.length < 1) {
+        if (commentContent.length < 1 && !commentAttachment) {
             setError(true);
         } else {
             const formData = new FormData();
@@ -199,7 +201,7 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
             <div className="card-footer">
                 {isEditing ? (
                     <div className="forum-container__Form--box">
-                        <label className="forum-container__Form--label" for="file">
+                        <label className="forum-container__Form--label" htmlFor="file">
                             <input className="forum-container__Form--file"
                                 type="file"
                                 aria-labelledby="fichier"
@@ -245,7 +247,7 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
             {postComments
                 .sort((a, b) => b.date - a.date)
                 .map((comments) => (
-                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} post={post} updateComments={updateComments} />
+                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} post={post} updateComments={updateComments} getData={getData} />
                 ))
             }
 
@@ -260,7 +262,7 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
                     value={commentContent}
                     onKeyDown={handleKeyDown}
                     aria-labelledby="contenu"
-                    id="contenu"
+                    id={"contentToPostToComment" + post.id}
                 ></textarea>
                 <div className="postComment__Form--box">
                     <label className="postComment__Form--label" htmlFor="file">
@@ -268,8 +270,8 @@ const Post = ({ post, storedJwt, updatePost, forumData }) => {
                             className="postComment__Form--file"
                             type="file" name="fileToUpload"
                             onChange={(e) => setCommentAttachment(e.target.files[0])}
-                            aria-labelledby="fichier"
-                            id="fichier" />
+                            aria-labelledby="fichier pour le commentaire"
+                            id={"fileComment" + post.id} />
                         <svg className="postComment__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                         {commentAttachment ? <span>Fichier choisit : {commentAttachment.name}</span> : <span>Choisir un fichier</span>}
                     </label>

@@ -61,6 +61,10 @@ exports.deleteUser = (req, res, next) => {
             error: new Error('Unauthorized request!')
           });
         }
+        if (user.attachment !== `${req.protocol}://${req.get('host')}/images/UserImage/Default/avatar.png`) {
+          const filename = user.attachment.split('/images/UserImage/Updated/')[1];
+          fs.unlink(`images/UserImage/Updated/${filename}`, () => { console.log("Image deleted !") })
+        }
         user.destroy()
           .then(() => res.status(200).json({ message: 'User deleted !' }))
           .catch(error => res.status(400).json({ error }))
@@ -87,11 +91,11 @@ exports.modifyUserAvatar = (req, res, next) => {
         }
         let newAttachment;
         if (user.attachment !== `${req.protocol}://${req.get('host')}/images/UserImage/Default/avatar.png`) {
-          newAttachment = `${req.protocol}://${req.get('host')}/images/UserImage/${req.file.filename}`;
-          const filename = user.attachment.split('/images/UserImage/')[1];
-          fs.unlink(`images/UserImage/${filename}`, () => { console.log("Image deleted !") })
+          newAttachment = `${req.protocol}://${req.get('host')}/images/UserImage/Updated/${req.file.filename}`;
+          const filename = user.attachment.split('/images/UserImage/Updated/')[1];
+          fs.unlink(`images/UserImage/Updated/${filename}`, () => { console.log("Image deleted !") })
         }
-        newAttachment = `${req.protocol}://${req.get('host')}/images/UserImage/${req.file.filename}`;
+        newAttachment = `${req.protocol}://${req.get('host')}/images/UserImage/Updated/${req.file.filename}`;
         User.update({ attachment: newAttachment }, { where: { id: req.params.id } })
           .then(() => {
             res.status(201).json({

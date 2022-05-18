@@ -69,12 +69,12 @@ const Login = () => {
                 </label>
                 <label className="homeForm__label">
                     <h2>Mot de passe :</h2>
-
                     <input
                         type="password"
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
+                        autoComplete="on"
                     />
                 </label>
                 <input className="homeSubmit" type="submit" value="Se connecter" />

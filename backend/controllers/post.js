@@ -8,7 +8,7 @@ exports.createPost = (req, res, next) => {
   const postObject = req.file ?
     {
       ...req.body,
-      attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      attachment: `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`
     } : req.body;
 
   delete postObject._id;
@@ -40,8 +40,7 @@ exports.getAllPosts = (req, res) => {
     include: [
       { model: PostLikes },
       { model: User, attributes: ['id', 'username', 'attachment'] },
-      { model: Comment, include: [{ model: User, attributes: ['id', 'username', 'attachment'] }] }
-
+      { model: Comment, include: [{ model: User, attributes: ['id', 'username', 'attachment'] }], order: [['createdAt', 'desc']] }
     ],
     order: [['createdAt', 'desc']]
   })
@@ -99,9 +98,9 @@ exports.modifyPost = (req, res, next) => {
         }
         const postObject = req.body;
         if (req.file) {
-          postObject.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-          const filename = post.attachment.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") })
+          postObject.attachment = `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`;
+          const filename = post.attachment.split('/images/ForumImages/')[1];
+          fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") })
         }
         Post.update({ ...postObject }, { where: { id: req.params.id } })
           .then(() => {
@@ -141,8 +140,8 @@ exports.deletePost = (req, res, next) => {
           });
         }
         if (post.attachment !== 'null') {
-          const filename = post.attachment.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") });
+          const filename = post.attachment.split('/images/ForumImages/')[1];
+          fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") });
         }
         post.destroy({ _id: req.params.id })
           .then((postUser) => res.status(200).json({

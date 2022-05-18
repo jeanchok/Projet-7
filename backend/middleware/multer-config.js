@@ -13,9 +13,9 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     if (req.originalUrl.includes('/api/auth/avatar/')) {
-      callback(null, 'images/UserImage');
+      callback(null, 'images/UserImage/Updated');
     } else {
-      callback(null, 'images');
+      callback(null, 'images/ForumImages');
     };
   },
   filename: (req, file, callback) => {

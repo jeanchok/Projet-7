@@ -7,7 +7,7 @@ exports.createComment = (req, res, next) => {
   const commentObject = req.file ?
     {
       ...req.body,
-      attachment: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      attachment: `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`
     } : req.body;
   delete commentObject._id;
   const comment = new Comment({
@@ -46,7 +46,7 @@ exports.getAllComments = (req, res) => {
     include: [
       { model: User, attributes: ['id', 'username', 'attachment'] }
     ],
-    order: [['createdAt', 'desc']]
+    order: [['createdAt', 'asc']]
   })
     .then(
       (comments) => {
@@ -95,9 +95,9 @@ exports.modifyComment = (req, res, next) => {
         }
         const commentObject = req.body;
         if (comment.attachment !== 'null') {
-          commentObject.attachment = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-          const filename = comment.attachment.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") })
+          commentObject.attachment = `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`;
+          const filename = comment.attachment.split('/images/ForumImages/')[1];
+          fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") })
         }
         Comment.update({ ...commentObject }, { where: { id: req.params.id } })
           .then(() => {
@@ -136,8 +136,8 @@ exports.deleteComment = (req, res, next) => {
           });
         }
         if (comment.attachment !== 'null') {
-          const filename = comment.attachment.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => { console.log("Image deleted !") });
+          const filename = comment.attachment.split('/images/ForumImages/')[1];
+          fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") });
         }
         comment.destroy({ _id: req.params.id })
           .then((commentUser) => res.status(200).json({

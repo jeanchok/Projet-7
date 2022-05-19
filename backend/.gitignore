@@ -1,3 +1,5 @@
 node_modules
 images/ForumImages/*
 images/UserImage/Updated/*
+# Except this file
+!.gitkeep

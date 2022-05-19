@@ -78,7 +78,7 @@ const Login = () => {
                     />
                 </label>
                 <input className="homeSubmit" type="submit" value="Se connecter" />
-                <h3 className="errorMessage">{errorMessage}</h3>
+                {errorMessage && <h3 className="errorMessage">{errorMessage}</h3>}
             </form>
         </div>
 

@@ -5,18 +5,22 @@ const Navigation = () => {
     return (
         <div className="navigation">
             <ul>
-                <NavLink
-                    to="/signup"
-                    className={(nav) => (nav.isActive ? "nav-active" : "")}
-                >
-                    <li>S'inscrire</li>
-                </NavLink>
-                <NavLink
-                    to="/login"
-                    className={(nav) => (nav.isActive ? "nav-active" : "")}
-                >
-                    <li>Se connecter</li>
-                </NavLink>
+                <li>
+                    <NavLink
+                        to="/signup"
+                        className={(nav) => (nav.isActive ? "nav-active" : "")}
+                    >
+                        <nav>S'inscrire</nav>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/login"
+                        className={(nav) => (nav.isActive ? "nav-active" : "")}
+                    >
+                        <nav>Se connecter</nav>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );

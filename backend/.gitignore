@@ -1,4 +1,5 @@
 node_modules
+.env
 images/ForumImages/*
 images/UserImage/Updated/*
 # Except this file

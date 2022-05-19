@@ -7,7 +7,6 @@ let database = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.env
     dialect: 'mysql'
 });
 
-
 // Connection to Database
 const connect = async () => {
     try {

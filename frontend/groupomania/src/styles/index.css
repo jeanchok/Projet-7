@@ -9,7 +9,7 @@ button {
   border-radius: 16px;
   border-top: transparent;
   display: inline-block;
-  background-color: #ffdbdb;
+  background-color: #87dbfa;
   width: 10%;
   min-width: 97px;
   height: 100%;
@@ -22,7 +22,7 @@ button {
 button:hover {
   -webkit-box-shadow: 0px 6px 14px -6px #000000e3;
           box-shadow: 0px 6px 14px -6px #000000e3;
-  background: #ffe5e5;
+  background: #cbf1ff;
 }
 
 ul {
@@ -33,6 +33,20 @@ ul {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+strong {
+  display: block;
+  font-size: 1.17em;
+  -webkit-margin-before: 1em;
+          margin-block-start: 1em;
+  -webkit-margin-after: 1em;
+          margin-block-end: 1em;
+  -webkit-margin-start: 0px;
+          margin-inline-start: 0px;
+  -webkit-margin-end: 0px;
+          margin-inline-end: 0px;
+  font-weight: bold;
 }
 
 /* Responsive */
@@ -70,8 +84,7 @@ ul {
 }
 
 .comments p {
-  text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .comments .imgComment {
@@ -236,6 +249,7 @@ ul {
 
 .logo__image {
   height: 200px;
+  width: 200px;
   margin: auto;
 }
 
@@ -274,6 +288,30 @@ ul {
   }
 }
 
+@media screen and (max-width: 347px) {
+  .navigation ul {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 347px) {
+  .navigation ul li {
+    width: 100%;
+    padding: 0 5px 0 5px;
+  }
+}
+
+@media screen and (max-width: 347px) {
+  .navigation ul a {
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    margin: 5px 0px 5px 0px;
+    text-align: center;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+}
+
 .navigation a {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -283,26 +321,26 @@ ul {
   margin: auto;
   text-decoration: none;
   color: black;
-  font-weight: 500;
+  font-weight: 600;
   border: solid transparent 1px;
   border-radius: 16px;
   border-top: transparent;
   display: inline-block;
   -webkit-box-shadow: 0px 5px 15px 1px #0000002e;
           box-shadow: 0px 5px 15px 1px #0000002e;
-  background-color: #ffdbdb;
+  background-color: #ff0000;
   width: 10%;
   min-width: 100px;
-  height: 100%;
   margin-bottom: 24px;
   margin: 10px;
   padding: 10px;
   min-width: 110px;
 }
 
-.navigation a :hover {
+.navigation a:hover {
   color: white;
   font-weight: 600;
+  background-color: #800000;
 }
 
 .navigation a li {
@@ -312,6 +350,7 @@ ul {
 .nav-active {
   color: white !important;
   font-weight: 600;
+  background-color: #800000 !important;
 }
 
 .post {
@@ -391,6 +430,7 @@ ul {
 .card-body input {
   border: 1px solid #61dafb;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 .card-body__title {
@@ -413,8 +453,7 @@ ul {
 
 .card-body h2,
 .card-body p {
-  text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .card-body p {
@@ -462,6 +501,10 @@ ul {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .card-footer::after {
@@ -480,7 +523,7 @@ ul {
   display: flex;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: end;
+          justify-content: flex-end;
   margin-bottom: 5px;
 }
 
@@ -498,6 +541,12 @@ ul {
 .postLike button span {
   font-size: large;
   margin-right: 5px;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 1em;
+  text-align: center;
 }
 
 .homeForm {
@@ -698,6 +747,10 @@ ul {
   background: #9be1fb;
 }
 
+.forum-container__Form--error {
+  color: #ff0000;
+}
+
 .forum-container h1 {
   text-align: center;
   margin-bottom: 30px;
@@ -707,6 +760,7 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-bottom: 10px;
 }
 
 .user-header,
@@ -752,7 +806,15 @@ ul {
   margin-left: 20px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .user-container__box {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
 .user-container__box .userLabel {
@@ -769,6 +831,15 @@ ul {
 
 .user-container__box button {
   margin: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 0;
+  max-height: 36px;
 }
 
 .user-container__box::before {
@@ -784,8 +855,6 @@ ul {
 
 @media screen and (max-width: 768px) {
   .user-container__box {
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
     margin-left: 0;
   }
 }
@@ -812,14 +881,6 @@ ul {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-}
-
-.user-container__box button {
-  margin-left: 10px;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  max-height: 36px;
 }
 
 .userImage__container {
@@ -945,9 +1006,29 @@ ul {
   margin: 10px;
 }
 
+@media screen and (max-width: 768px) {
+  .user-container__admin--grid {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
 .user-container__admin--grid button {
-  margin: 0 !important;
   text-align: center;
   height: 36px;
+  margin-left: -10px;
+}
+
+@media screen and (max-width: 768px) {
+  .user-container__admin--grid button {
+    margin-left: 0;
+  }
+}
+
+#emailAdmin {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 /*# sourceMappingURL=index.css.map */

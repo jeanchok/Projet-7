@@ -13,6 +13,27 @@
         @include mobile {
             @include verticalCenter;
         }
+
+        @include mobileS {
+            width: 100%;
+        }
+
+        li {
+            @include mobileS {
+                width: 100%;
+                padding: 0 5px 0 5px;
+            }
+        }
+
+        a {
+            @include mobileS {
+                width: 100%;
+                padding: 10px 0px 10px 0px;
+                margin: 5px 0px 5px 0px;
+                text-align: center;
+                box-shadow: none;
+            }
+        }
     }
 
     a {
@@ -45,14 +66,13 @@
 
         li {
             list-style-type: none;
-
         }
     }
 }
 
 // If the page is active
 .nav-active {
-    color: $white !important;
+    color: $white  !important;
     font-weight: 600;
-    background-color: $darkRed2 !important;
+    background-color: $darkRed2  !important;
 }

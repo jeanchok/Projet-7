@@ -47,11 +47,13 @@
         &--title {
             @include boxRadius;
             font-size: large;
+            font-family: 'Montserrat', sans-serif;
         }
 
         &--content {
             @include boxRadius;
             font-size: medium;
+            font-family: 'Montserrat', sans-serif;
         }
 
         &--file {

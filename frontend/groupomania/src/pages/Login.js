@@ -65,6 +65,7 @@ const Login = () => {
                         name="username"
                         onChange={(e) => setUsername(e.target.value)}
                         value={username}
+                        required
                     />
                 </label>
                 <label className="homeForm__label">
@@ -75,6 +76,7 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         autoComplete="on"
+                        required
                     />
                 </label>
                 <input className="homeSubmit" type="submit" value="Se connecter" />

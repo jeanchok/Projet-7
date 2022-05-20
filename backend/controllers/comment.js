@@ -88,13 +88,13 @@ exports.modifyComment = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (comment.userId !== req.auth.userId && req.auth.isAdmin === false) {
+        if (comment.userId !== req.auth.userId && !req.auth.isAdmin) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });
         }
         const commentObject = req.body;
-        if (comment.attachment !== 'null') {
+        if (!comment.attachment) {
           commentObject.attachment = `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`;
           const filename = comment.attachment.split('/images/ForumImages/')[1];
           fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") })
@@ -130,7 +130,7 @@ exports.deleteComment = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (comment.userId !== req.auth.userId && req.auth.isAdmin === false) {
+        if (comment.userId !== req.auth.userId && !req.auth.isAdmin) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });

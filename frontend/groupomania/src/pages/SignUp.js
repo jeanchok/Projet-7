@@ -78,6 +78,7 @@ const SignUp = () => {
                         required
                         minLength={3}
                         pattern="[a-zA-Z0-9éèêôöïà]*"
+                        title="Ne peut contenir que des lettres et des chiffres"
                     />
                 </label>
                 <label className="homeForm__label">

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const Comments = ({ comments, storedJwt, post, updateComments, getData }) => {
+const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKeyDown }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
     const [editCommenttAttachment, seteditCommenttAttachment] = useState("");
@@ -73,7 +73,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData }) => {
     return (
         <div
             className="comments"
-            style={{ background: isEditing ? "#f3feff" : "#f2f2f2" }}
+            style={{ border: isEditing ? "red solid 1px" : "none" }}
         >
             <div className="card-header">
                 <div className="card-header__imgContainer">
@@ -89,6 +89,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData }) => {
                     defaultValue={editContent ? editContent : comments.content}
                     autoFocus
                     onChange={(e) => setEditContent(e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(e)}
                 ></textarea>
             ) : (
                 <p>{editContent ? editContent : comments.content}</p>

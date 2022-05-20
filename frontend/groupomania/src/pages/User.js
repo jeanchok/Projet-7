@@ -288,7 +288,6 @@ const User = () => {
                                     <form>
                                         <label>
                                             <input
-
                                                 type="password"
                                                 name="password"
                                                 onChange={(e) => setPassword(e.target.value)}
@@ -296,6 +295,7 @@ const User = () => {
                                                 minLength={8}
                                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                                 title="Doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule"
+                                                autoComplete="off"
                                             />
                                         </label>
                                     </form>

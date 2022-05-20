@@ -13,13 +13,14 @@ const Groupomania = () => {
     const [attachment, setAttachment] = useState(null);
     const [error, setError] = useState(false);
     const [errorImageFormat, setErrorImageFormat] = useState(false);
+    const [submited, setSubmited] = useState(false);
     const storedJwt = sessionStorage.getItem('token');
 
 
 
     // Text area get bigger when typing
     const handleKeyDown = (e) => {
-        e.target.style.height = 'inherit';
+        e.target.style.height = 'auto';
         e.target.style.height = `${e.target.scrollHeight}px`;
     }
 
@@ -60,8 +61,10 @@ const Groupomania = () => {
             setAttachment(null);
             return;
         }
-
-        if (content.length < 1) {
+        if (!title) {
+            setTitle("");
+        }
+        if (!attachment && content.length < 5) {
             setError(true);
         } else {
             const formData = new FormData();
@@ -82,6 +85,7 @@ const Groupomania = () => {
             setTitle("");
             setAttachment(null);
             setErrorImageFormat(false);
+            setSubmited(true);
         }
     };
 
@@ -106,7 +110,7 @@ const Groupomania = () => {
                     />
                     <textarea
                         className="forum-container__Form--content"
-                        style={{ border: error ? "1px solid red" : "1px solid #52cdfa" }}
+                        style={{ border: error ? "1px solid red" : "1px solid #52cdfa", height: submited ? "auto" : null }}
                         placeholder="Exprimez vous :)"
                         onChange={(e) => setContent(e.target.value)}
                         value={content}
@@ -128,8 +132,8 @@ const Groupomania = () => {
                             {attachment ? <span>Fichier choisit : {attachment.name}</span> : <span>Choisir un fichier</span>}
                         </label>
                     </div>
-                    {errorImageFormat ? <p className="forum-container__Form--error">Votre image doit être au format jpg, jpeg ou png</p> : null}
-                    {error && <p className="forum-container__Form--error">Veuillez écrire un minimum de 5 caractères</p>}
+                    {errorImageFormat ? <p className="forum-container__Form--error">Votre image doit être au format jpg, jpeg, png, bmp, webp ou gif</p> : null}
+                    {error && <p className="forum-container__Form--error">Veuillez écrire un minimum de 5 caractères ou importer une image</p>}
                     <input className="forum-container__Form--submit" type="submit" value="Poster" />
                 </form>
                 <ul>
@@ -138,7 +142,7 @@ const Groupomania = () => {
                         {forumData
                             .sort((a, b) => b.date - a.date)
                             .map((post) => (
-                                <Post key={post.id} post={post} storedJwt={storedJwt} comments={post.comments} updatePost={updatePost} forumData={forumData} getData={getData} />
+                                <Post key={post.id} post={post} storedJwt={storedJwt} comments={post.comments} updatePost={updatePost} forumData={forumData} getData={getData} handleKeyDown={handleKeyDown} />
                             ))
                         }
                     </li>

@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Comments from "./Comments";
 
-const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
+const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }) => {
     const [like, setlike] = useState(post.likes);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState("");
@@ -17,12 +17,6 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
     const userId = sessionStorage.getItem('userId');
     const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId == userId));
     const [errorImageFormat, setErrorImageFormat] = useState(false);
-
-    // Textearea get larger when user is typing
-    const handleKeyDown = (e) => {
-        e.target.style.height = 'inherit';
-        e.target.style.height = `${e.target.scrollHeight}px`;
-    }
 
     // udpate comment
     const updateComments = (updatedComments) => {
@@ -102,7 +96,6 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
                 })
             .then(() => {
                 setUserLiked(!userLiked);
-                console.log(userLiked, post.id);
                 if (userLiked) {
                     setlike(like - 1);
                 } else {
@@ -127,7 +120,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
             return;
         }
 
-        if (commentContent.length < 1 && !commentAttachment) {
+        if (commentContent.length < 5 && !commentAttachment) {
             setError(true);
         } else {
             const formData = new FormData();
@@ -174,6 +167,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
                     (<input
                         type='text'
                         defaultValue={editTitle ? editTitle : post.title}
+                        className='forum-container__Form--title'
                         onChange={(e) => setEditTitle(e.target.value)} />
                     ) : (
 
@@ -185,6 +179,8 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
                         defaultValue={editContent ? editContent : post.content}
                         autoFocus
                         onChange={(e) => setEditContent(e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(e)}
+                        className='forum-container__Form--content'
                     ></textarea>
                 ) : (
 
@@ -247,7 +243,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
             {postComments
                 .sort((a, b) => b.date - a.date)
                 .map((comments) => (
-                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} post={post} updateComments={updateComments} getData={getData} />
+                    <Comments key={comments.id} comments={comments} storedJwt={storedJwt} postId={post.id} post={post} updateComments={updateComments} getData={getData} handleKeyDown={handleKeyDown} />
                 ))
             }
 
@@ -276,8 +272,8 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData }) => {
                         {commentAttachment ? <span>Fichier choisit : {commentAttachment.name}</span> : <span>Choisir un fichier</span>}
                     </label>
                 </div>
-                {error && <p className="error">Veuillez écrire un minimum de 5 caractères</p>}
-                {errorImageFormat && <p className="error">Le fichier n'est pas une image</p>}
+                {error && <p className="error">Veuillez écrire un minimum de 5 caractères ou importer une image</p>}
+                {errorImageFormat && <p className="error">Votre image doit être au format jpg, jpeg, png, bmp, webp ou gif</p>}
                 <input className="postComment__submit" type="submit" value="Envoyer" />
             </form>
         </div>

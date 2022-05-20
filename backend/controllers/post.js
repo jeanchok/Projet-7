@@ -107,8 +107,7 @@ exports.modifyPost = (req, res, next) => {
             res.status(201).json({
               message: 'Post modified !', postObject
             });
-          }
-          )
+          })
           .catch(
             (error) => {
               res.status(400).json({

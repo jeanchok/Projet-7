@@ -56,7 +56,7 @@ exports.deleteUser = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+        if (user.id !== req.auth.userId && !req.auth.isAdmin) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });
@@ -84,7 +84,7 @@ exports.modifyUserAvatar = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+        if (user.id !== req.auth.userId) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });
@@ -101,8 +101,7 @@ exports.modifyUserAvatar = (req, res, next) => {
             res.status(201).json({
               message: 'User avatar updated !', newAttachment
             });
-          }
-          )
+          })
           .catch(
             (error) => {
               res.status(400).json({
@@ -128,7 +127,7 @@ exports.modifyUsername = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+        if (user.id !== req.auth.userId) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });
@@ -165,7 +164,7 @@ exports.modifyUserEmail = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+        if (user.id !== req.auth.userId) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });
@@ -173,10 +172,10 @@ exports.modifyUserEmail = (req, res, next) => {
         User.update({ email: req.body.email }, { where: { id: req.params.id } })
           .then(() => {
             res.status(201).json({
-              message: 'Email modified !', email: req.body.email
+              message: 'Email modified !',
+              email: req.body.email
             });
-          }
-          )
+          })
           .catch(
             (error) => {
               res.status(400).json({
@@ -186,9 +185,10 @@ exports.modifyUserEmail = (req, res, next) => {
           );
       }
     )
-    .catch(error => {
-      res.status(500).json({ error })
-    }
+    .catch(
+      (error) => {
+        res.status(500).json({ error })
+      }
     );
 };
 
@@ -202,7 +202,7 @@ exports.modifyUserPassword = (req, res, next) => {
             error: new Error('No such Thing!')
           });
         }
-        if (req.params.id !== req.auth.userId && !req.auth.isAdmin) {
+        if (user.id !== req.auth.userId) {
           res.status(400).json({
             error: new Error('Unauthorized request!')
           });

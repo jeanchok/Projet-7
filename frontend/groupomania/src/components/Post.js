@@ -173,7 +173,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
                         onChange={(e) => setEditTitle(e.target.value)} />
                     ) : (
 
-                        <h2>{post.title}</h2>
+                        <h2>{editTitle ? editTitle : post.title}</h2>
 
                     )}
                 {isEditing ? (

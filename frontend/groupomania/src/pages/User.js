@@ -20,6 +20,7 @@ const User = () => {
     const [isMailEditing, setIsMailEditing] = useState(false);
     const [isPasswordEditing, setIsPasswordEditing] = useState(false);
     const [isUsernameEditing, setIsUsernameEditing] = useState(false);
+    const [errorEmail2, setErrorEmail2] = useState(false);
 
     // Delete user account
     const handleDelete = () => {
@@ -100,11 +101,16 @@ const User = () => {
                 console.log(res);
                 setuserData({ ...userData, email: res.data.email });
                 setIsMailEditing(false);
-
+                setErrorEmail2(false);
             })
             .catch((err) => {
                 console.error(err);
-                setErrorEmail(true);
+                if (err.response.status === 400) {
+                    setErrorEmail(true);
+                }
+                if (err.response.status === 403) {
+                    setErrorEmail2(true);
+                }
             })
     };
 
@@ -245,7 +251,8 @@ const User = () => {
                             <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>
                         }
                     </div>
-                    {errorEmail && <p>Veuillez choisir une adresse e-mail unique.</p>}
+                    {errorEmail && <p className="errorMessage">Veuillez choisir une adresse e-mail unique.</p>}
+                    {errorEmail2 && <p className="errorMessage">Veuillez choisir entrer une adresse e-mail au bon format.</p>}
                     <div className="user-container__box">
                         <h3>Nom d'utilisateur :</h3>
                         <div className="user-container__box--info">
@@ -278,7 +285,7 @@ const User = () => {
                             <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>
                         }
                     </div>
-                    {errorUsername && <p>Veuillez choisir un nom d'utilisateur unique.</p>}
+                    {errorUsername && <p className="errorMessage">Veuillez choisir un nom d'utilisateur unique.</p>}
 
                     <div className="user-container__box">
                         <h3>Mot de passe </h3>
@@ -312,7 +319,7 @@ const User = () => {
                             <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>
                         }
                     </div>
-                    {errorPassword && <p>Votre mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule.</p>}
+                    {errorPassword && <p className="errorMessage">Votre mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule.</p>}
                 </div>
             </div>
         </div>

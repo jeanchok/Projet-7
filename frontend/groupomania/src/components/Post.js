@@ -17,6 +17,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
     const userId = sessionStorage.getItem('userId');
     const [userLiked, setUserLiked] = useState(post.PostLikes.some(like => like.userId == userId));
     const [errorImageFormat, setErrorImageFormat] = useState(false);
+    const [submited, setSubmited] = useState(false);
 
     // udpate comment
     const updateComments = (updatedComments) => {
@@ -140,6 +141,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
                     setpostComments(post.Comments);
                     setCommentContent("");
                     setCommentAttachment(null);
+                    setSubmited(true);
                 })
                 .catch((err) => {
                     console.error(err)
@@ -252,7 +254,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
             <form className="postComment" onSubmit={(e) => handleSubmit(e)}>
                 <textarea
                     placeholder="Ajouter un commentaire"
-                    style={{ border: error ? "1px solid red" : "1px solid #61dafb" }}
+                    style={{ border: error ? "1px solid red" : "1px solid #61dafb", height: submited ? "auto" : null }}
                     className="postComment__textarea"
                     onChange={(e) => setCommentContent(e.target.value)}
                     value={commentContent}

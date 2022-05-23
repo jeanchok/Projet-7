@@ -21,7 +21,7 @@ const Groupomania = () => {
     // Text area get bigger when typing
     const handleKeyDown = (e) => {
         e.target.style.height = 'auto';
-        e.target.style.height = `${e.target.scrollHeight}px`;
+        e.target.style.height = `${e.target.scrollHeight - 26}px`;
     }
 
     // Get all posts and comments

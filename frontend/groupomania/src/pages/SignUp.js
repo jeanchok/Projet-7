@@ -95,8 +95,8 @@ const SignUp = () => {
                         title="Doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule"
                     />
                 </label>
-                {error && <p>Veuillez choisir un nom d'utilisateur et une adresse e-mail unique.</p>}
-                {error2 && <p>Oups... Un problème est survenu.</p>}
+                {error && <p className="errorMessage">Veuillez choisir un nom d'utilisateur et une adresse e-mail unique.</p>}
+                {error2 && <p className="errorMessage">Oups... Un problème est survenu.</p>}
                 <input className="homeSubmit" type="submit" value="S'enregister" />
             </form>
         </div>

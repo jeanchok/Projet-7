@@ -219,14 +219,14 @@ const User = () => {
                             <button onClick={() => setIsPictureEditing(!isPictureEditing)}>Modifier</button>
                         }
                     </div>
-                    {errorAttachment && <p>Veuillez choisir une image au format PNG, JPEG ou JPG.</p>}
-                    <div className="user-container__box">
+                    {errorAttachment && <p className="errorMessage">Veuillez choisir une image au format PNG, JPEG ou JPG.</p>}
+                    <form className="user-container__box">
                         <h3>Adresse email :</h3>
                         <div className="user-container__box--info">
                             {isMailEditing ? (
                                 <div>
                                     <p>{userData.email}</p>
-                                    <form>
+                                    <div>
                                         <label>
                                             <input
                                                 type="email"
@@ -237,7 +237,7 @@ const User = () => {
                                                 required
                                             />
                                         </label>
-                                    </form>
+                                    </div>
                                 </div>) : (<p>{userData.email}</p>)}
                         </div>
                         {isMailEditing ?
@@ -250,16 +250,16 @@ const User = () => {
                             </div> :
                             <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>
                         }
-                    </div>
+                    </form>
                     {errorEmail && <p className="errorMessage">Veuillez choisir une adresse e-mail unique.</p>}
                     {errorEmail2 && <p className="errorMessage">Veuillez choisir entrer une adresse e-mail au bon format.</p>}
-                    <div className="user-container__box">
+                    <form className="user-container__box">
                         <h3>Nom d'utilisateur :</h3>
                         <div className="user-container__box--info">
                             {isUsernameEditing ? (
                                 <div>
                                     <p>{userData.username}</p>
-                                    <form>
+                                    <div>
                                         <label>
                                             <input
                                                 type="text"
@@ -271,12 +271,12 @@ const User = () => {
                                                 required
                                             />
                                         </label>
-                                    </form>
+                                    </div>
                                 </div>) : (<p>{userData.username}</p>)}
                         </div>
                         {isUsernameEditing ?
                             <div className="user-container__box--edit">
-                                {username ? <button onClick={(e) => HandleUsernameUpdate(e)}>Valider</button> : null}
+                                {username ? <button type="submit" onClick={(e) => HandleUsernameUpdate(e)}>Valider</button> : null}
                                 <button onClick={() => {
                                     setIsUsernameEditing(!isUsernameEditing);
                                     setErrorUsername(false);
@@ -284,15 +284,15 @@ const User = () => {
                             </div> :
                             <button onClick={() => setIsUsernameEditing(!isUsernameEditing)}>Modifier</button>
                         }
-                    </div>
+                    </form>
                     {errorUsername && <p className="errorMessage">Veuillez choisir un nom d'utilisateur unique.</p>}
 
-                    <div className="user-container__box">
+                    <form className="user-container__box">
                         <h3>Mot de passe </h3>
                         <div className="user-container__box--info">
                             {isPasswordEditing ? (
                                 <div className="passwordInput">
-                                    <form>
+                                    <div>
                                         <label>
                                             <input
                                                 type="password"
@@ -305,12 +305,12 @@ const User = () => {
                                                 autoComplete="off"
                                             />
                                         </label>
-                                    </form>
+                                    </div>
                                 </div>) : (<p></p>)}
                         </div>
                         {isPasswordEditing ?
                             <div className="user-container__box--edit">
-                                {password ? <button onClick={(e) => HandlePasswordUpdate(e)}>Valider</button> : null}
+                                {password ? <button type="submit" onClick={(e) => HandlePasswordUpdate(e)}>Valider</button> : null}
                                 <button onClick={() => {
                                     setIsPasswordEditing(!isPasswordEditing);
                                     setErrorPassword(false);
@@ -318,7 +318,7 @@ const User = () => {
                             </div> :
                             <button onClick={() => setIsPasswordEditing(!isPasswordEditing)}>Modifier</button>
                         }
-                    </div>
+                    </form>
                     {errorPassword && <p className="errorMessage">Votre mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et une minuscule.</p>}
                 </div>
             </div>

@@ -56,7 +56,6 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             .then((result) => {
                 setFileCommentUpdated(result.data.commentObject.attachment);
                 setIsEditing(false);
-                console.log("ok", result.data.commentObject);
                 setErrorImageFormat(false);
             })
             .catch((err) => {
@@ -109,7 +108,13 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             )}
             <div className="card-attachement">
                 {
-                    (comments.attachment !== 'null' || (fileCommentUpdated !== "")) ? <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" /> : null
+                    ((comments.attachment == 'null' && fileCommentUpdated == "") || (comments.attachment == 'null' && fileCommentUpdated == 'null')) ? null : <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" />
+                }
+                {
+                    console.log('comments.attachment', comments.attachment)
+                }
+                {
+                    console.log('fileCommentUpdated', fileCommentUpdated)
                 }
             </div>
             {isEditing ? (

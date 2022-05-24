@@ -110,12 +110,6 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
                 {
                     ((comments.attachment == 'null' && fileCommentUpdated == "") || (comments.attachment == 'null' && fileCommentUpdated == 'null')) ? null : <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" />
                 }
-                {
-                    console.log('comments.attachment', comments.attachment)
-                }
-                {
-                    console.log('fileCommentUpdated', fileCommentUpdated)
-                }
             </div>
             {isEditing ? (
                 <div className="forum-container__Form--box">

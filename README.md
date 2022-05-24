@@ -51,7 +51,10 @@ The software you need and how to install them.
    ```sh
    npm install
    ```
-3. Create a file `.env` in backend (here is an exemple)
+3. Create a mysql data base and write the name in the .env file as DBNAME
+   ```
+   ```
+4. Create a file `.env` in backend (here is an exemple)
    ```sh
    DBUSER = Groupomania
    DBPASSWORD = MyComplexPassword
@@ -59,11 +62,11 @@ The software you need and how to install them.
    DBNAME = Groupomania
    TOKEN_KEY = "051d76f6b05cf4168ffb34bd9ff655ec"
    ```
-4. Run the backend server - in backend terminal :
+5. Run the backend server - in backend terminal :
    ```sh
    nodemon server
    ```
-5. Run the frontend server - in frontend terminal :
+6. Run the frontend server - in frontend terminal :
    ```sh
    npm start
    ```

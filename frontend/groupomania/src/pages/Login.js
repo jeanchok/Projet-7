@@ -11,6 +11,7 @@ const Login = () => {
     // Login
     const HandleLogin = (e) => {
         e.preventDefault();
+        setErrorMessage("");
         axios
             .post('http://localhost:3008/api/auth/login', {
                 username: username,
@@ -18,11 +19,11 @@ const Login = () => {
             })
             .catch((error) => {
                 console.log(`Erreur : ` + error);
-                if (error.response.status === 401) {
-                    setErrorMessage("Votre mot de passe ou votre nom d'utilisateur est incorrect");
-                }
                 if (error.response.status === 400) {
-                    setErrorMessage("Votre mot de passe ou votre nom d'utilisateur est incorrect");
+                    setErrorMessage("Votre nom d'utilisateur est incorrect");
+                }
+                if (error.response.status === 401) {
+                    setErrorMessage("Votre mot de passe est incorrect");
                 }
                 if (error.response.status === 500) {
                     setErrorMessage("Une erreur est survenue, veuillez réessayer plus tard");

@@ -87,6 +87,8 @@ const User = () => {
     // Update user mail
     const HandleEmailUpdate = (e) => {
         e.preventDefault();
+        setErrorEmail(false);
+        setErrorEmail2(false);
         axios
             .put("http://localhost:3008/api/auth/email/" + userId,
                 { email: email },
@@ -246,6 +248,7 @@ const User = () => {
                                 <button onClick={() => {
                                     setIsMailEditing(!isMailEditing);
                                     setErrorEmail(false);
+                                    setErrorEmail2(false);
                                 }}>Annuler</button>
                             </div> :
                             <button onClick={() => setIsMailEditing(!isMailEditing)}>Modifier</button>

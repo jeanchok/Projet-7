@@ -20,6 +20,8 @@ const SignUp = () => {
     // Sign up
     const HandleSignUp = (e) => {
         e.preventDefault();
+        setError(false);
+        setError2(false);
 
 
         axios.post("http://localhost:3008/api/auth/signup", {

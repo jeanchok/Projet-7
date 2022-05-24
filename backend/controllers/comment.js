@@ -80,7 +80,7 @@ exports.getOneComment = (req, res, next) => {
 
 // Update a comment for a post
 exports.modifyComment = (req, res, next) => {
-  Comment.findOne({ _id: req.params.id })
+  Comment.findOne({ where: { id: req.params.id } })
     .then(
       (comment) => {
         if (!comment) {

@@ -79,13 +79,19 @@ const Groupomania = () => {
                             'Authorization': `Bearer ${storedJwt}`,
                         }
                     })
-                .then(() => getData());
-            setError(false);
-            setContent("");
-            setTitle("");
-            setAttachment(null);
-            setErrorImageFormat(false);
-            setSubmited(true);
+                .then(() => {
+                    getData();
+                    setError(false);
+                    setContent("");
+                    setTitle("");
+                    setAttachment(null);
+                    setErrorImageFormat(false);
+                    setSubmited(true);
+                })
+                .catch((err) => {
+                    console.error(err)
+                }
+                );
         }
     };
 

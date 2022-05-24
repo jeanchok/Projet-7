@@ -255,7 +255,7 @@ const User = () => {
                         }
                     </form>
                     {errorEmail && <p className="errorMessage">Veuillez choisir une adresse e-mail unique.</p>}
-                    {errorEmail2 && <p className="errorMessage">Veuillez choisir entrer une adresse e-mail au bon format.</p>}
+                    {errorEmail2 && <p className="errorMessage">Veuillez choisir une adresse e-mail au bon format.</p>}
                     <form className="user-container__box">
                         <h3>Nom d'utilisateur :</h3>
                         <div className="user-container__box--info">

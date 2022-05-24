@@ -94,7 +94,7 @@ exports.modifyComment = (req, res, next) => {
           });
         }
         const commentObject = req.body;
-        if (!comment.attachment) {
+        if (req.file) {
           commentObject.attachment = `${req.protocol}://${req.get('host')}/images/ForumImages/${req.file.filename}`;
           const filename = comment.attachment.split('/images/ForumImages/')[1];
           fs.unlink(`images/ForumImages/${filename}`, () => { console.log("Image deleted !") })

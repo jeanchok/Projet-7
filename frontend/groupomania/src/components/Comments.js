@@ -45,6 +45,9 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             .then((result) => {
                 seteditCommenttAttachment(result.data.commentObject.attachment);
                 setIsEditing(false);
+                if (editCommenttAttachment) {
+                    getData();
+                }
             })
             .catch((err) => {
                 console.error(err)
@@ -95,7 +98,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
                 <p>{editContent ? editContent : comments.content}</p>
             )}
             {
-                (comments.attachment == 'null') ? null : <img className="imgComment" src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment" />
+                (comments.attachment == 'null') ? <img className="imgComment" src={editCommenttAttachment ? editCommenttAttachment : comments.attachment} alt="attachment" /> : null
             }
             {isEditing ? (
                 <div className="forum-container__Form--box">

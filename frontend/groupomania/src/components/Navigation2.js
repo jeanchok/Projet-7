@@ -2,7 +2,10 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 const isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
 
+
 const Navigation2 = () => {
+
+    // Navigation menu once logged in
 
     const HandleLogout = () => {
         sessionStorage.clear();
@@ -22,6 +25,7 @@ const Navigation2 = () => {
                         <nav>Mon compte</nav>
                     </NavLink>
                 </li>
+                {/* Display admin menu if admin */}
                 <li>
                     {
                         isAdmin ?

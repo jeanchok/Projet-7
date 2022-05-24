@@ -2,6 +2,8 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 
 const Navigation = () => {
+
+    // Navigation menu if not logged in
     return (
         <div className="navigation">
             <ul>

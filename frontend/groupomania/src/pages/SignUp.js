@@ -59,6 +59,7 @@ const SignUp = () => {
 
             <form className="homeForm" onSubmit={(e) => HandleSignUp(e)}>
                 <h1 className="hometitle">Inscription</h1>
+                {/* Email Adress */}
                 <label className="homeForm__label">
                     <h2>Adresse e-mail :</h2>
                     <input
@@ -70,6 +71,7 @@ const SignUp = () => {
                         required
                     />
                 </label>
+                {/* Username */}
                 <label className="homeForm__label">
                     <h2>Nom d'utilisateur :</h2>
                     <input
@@ -83,6 +85,7 @@ const SignUp = () => {
                         title="Ne peut contenir que des lettres et des chiffres"
                     />
                 </label>
+                {/* Password */}
                 <label className="homeForm__label">
                     <h2>Mot de passe :</h2>
                     <input

@@ -59,6 +59,7 @@ const Login = () => {
             </header>
             <form className="homeForm" onSubmit={(e) => HandleLogin(e)}>
                 <h1 className="hometitle">Connexion</h1>
+                {/* Username */}
                 <label className="homeForm__label">
                     <h2>Nom d'utilisateur :</h2>
                     <input
@@ -69,6 +70,7 @@ const Login = () => {
                         required
                     />
                 </label>
+                {/* Password */}
                 <label className="homeForm__label">
                     <h2>Mot de passe :</h2>
                     <input

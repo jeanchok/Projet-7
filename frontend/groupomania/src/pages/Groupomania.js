@@ -105,6 +105,7 @@ const Groupomania = () => {
                 <h1>Fil d’actualité</h1>
                 {/* Post form submission */}
                 <form className="forum-container__Form" onSubmit={(e) => handleSubmit(e)}>
+                    {/* Title post */}
                     <input
                         placeholder="Titre..."
                         className="forum-container__Form--title"
@@ -114,6 +115,7 @@ const Groupomania = () => {
                         aria-labelledby="titre"
                         id="titre"
                     />
+                    {/* Content post */}
                     <textarea
                         className="forum-container__Form--content"
                         style={{ border: error ? "1px solid red" : "1px solid #52cdfa", height: submited ? "auto" : null }}
@@ -124,6 +126,7 @@ const Groupomania = () => {
                         aria-labelledby="contenu"
                         id="contentToPost"
                     ></textarea>
+                    {/* Attachment post */}
                     <div className="forum-container__Form--box">
                         <label className="forum-container__Form--label" htmlFor="file">
                             <input className="forum-container__Form--file"

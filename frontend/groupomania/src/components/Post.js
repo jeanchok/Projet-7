@@ -164,6 +164,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
             className="post"
             style={{ background: isEditing ? "#f3feff" : "white" }}
         >
+            {/* Post header */}
             <div className="card-header">
                 <div className="card-header__imgContainer">
                     <img className="card-header__imgContainer--img" src={post.User.attachment} alt={post.User.username + ' avatar'} />
@@ -173,6 +174,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
                     <em>Posté le {dateFormater(post.createdAt)}</em>
                 </div>
             </div>
+            {/* Post title */}
             <div className="card-body">
                 {isEditing ?
                     (<input
@@ -185,6 +187,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
                         <h2>{editTitle ? editTitle : post.title}</h2>
 
                     )}
+                {/* Post content */}
                 {isEditing ? (
                     <textarea
                         defaultValue={editContent ? editContent : post.content}
@@ -199,12 +202,12 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
 
                 )}
             </div>
+            {/* Post attachment */}
             <div className="card-attachement">
                 {
                     (post.attachment !== 'null') ? <img className="card-attachement--img" src={editPostAttachment ? editPostAttachment : post.attachment} alt="attachment2" /> : null
                 }
             </div>
-            {/*  */}
             <div className="card-footer">
                 {isEditing ? (
                     <div className="forum-container__Form--box">
@@ -243,6 +246,7 @@ const Post = ({ post, storedJwt, updatePost, forumData, getData, handleKeyDown }
                         </button>
                     </div>
                 ) : null}
+                {/* Post like */}
                 <div className="postLike">
                     <button onClick={() => handleLike()}>
                         <span>{like}</span>

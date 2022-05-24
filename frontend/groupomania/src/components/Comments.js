@@ -87,6 +87,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             className="comments"
             style={{ border: isEditing ? "red solid 1px" : "none" }}
         >
+            {/* Comment header */}
             <div className="card-header">
                 <div className="card-header__imgContainer">
                     <img className="card-header__imgContainer--img" src={comments.User.attachment} alt={comments.User.username + ' avatar'} />
@@ -96,6 +97,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
                     <em>commenté le {dateFormater(comments.createdAt)}</em>
                 </div>
             </div>
+            {/* Comment content */}
             {isEditing ? (
                 <textarea
                     defaultValue={editContent ? editContent : comments.content}
@@ -106,6 +108,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             ) : (
                 <p>{editContent ? editContent : comments.content}</p>
             )}
+            {/* Comment attachment */}
             <div className="card-attachement">
                 {
                     ((comments.attachment == 'null' && fileCommentUpdated == "") || (comments.attachment == 'null' && fileCommentUpdated == 'null')) ? null : <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" />
@@ -125,7 +128,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
                     {errorImageFormat ? <p className="forum-container__Form--error">Votre image doit être au format jpg, jpeg, png, bmp, webp ou gif</p> : null}
                 </div>)
                 : null}
-
+            {/* Display managing comment button if user's comment or if the user is admin */}
             {manageComment ? (
                 <div className="btn-container">
                     {isEditing ? (

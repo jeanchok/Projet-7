@@ -181,6 +181,8 @@ const User = () => {
             <div className="user-container">
                 <div className="user-container-left">
                     <h2>Informations personnelles</h2>
+
+                    {/* Profil picture */}
                     <div className="user-container__box">
                         <h3>Photo de profil :</h3>
                         <div className="user-container__box--info">
@@ -196,10 +198,9 @@ const User = () => {
                                             name="fileToUpload"
                                             onChange={(e) => setFileToUpload(e.target.files[0])}
                                         />
-
                                         <label className="forum-container__Form--label" htmlFor="file">
                                             <svg className="forum-container__Form--labelIcone" xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                                            {fileToUpload ? <span>{fileToUpload.name}</span> : <span>Choisir un fichier</span>}
+                                            {fileToUpload ? <span className="userFileToUpload">{fileToUpload.name}</span> : <span className="userFileToUpload">Choisir un fichier</span>}
                                         </label>
                                     </div>
                                 </div>
@@ -222,6 +223,7 @@ const User = () => {
                         }
                     </div>
                     {errorAttachment && <p className="errorMessage">Veuillez choisir une image au format PNG, JPEG ou JPG.</p>}
+                    {/* email adress */}
                     <form className="user-container__box">
                         <h3>Adresse email :</h3>
                         <div className="user-container__box--info">
@@ -256,6 +258,8 @@ const User = () => {
                     </form>
                     {errorEmail && <p className="errorMessage">Veuillez choisir une adresse e-mail unique.</p>}
                     {errorEmail2 && <p className="errorMessage">Veuillez choisir une adresse e-mail au bon format.</p>}
+
+                    {/* Username */}
                     <form className="user-container__box">
                         <h3>Nom d'utilisateur :</h3>
                         <div className="user-container__box--info">
@@ -289,7 +293,7 @@ const User = () => {
                         }
                     </form>
                     {errorUsername && <p className="errorMessage">Veuillez choisir un nom d'utilisateur unique.</p>}
-
+                    {/* Password */}
                     <form className="user-container__box">
                         <h3>Mot de passe </h3>
                         <div className="user-container__box--info">

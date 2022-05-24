@@ -109,7 +109,7 @@ const Comments = ({ comments, storedJwt, post, updateComments, getData, handleKe
             )}
             <div className="card-attachement">
                 {
-                    (comments.attachment !== 'null' || (fileCommentUpdated)) ? <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" /> : null
+                    (comments.attachment !== 'null' || (fileCommentUpdated !== "")) ? <img className="imgComment" src={fileCommentUpdated ? fileCommentUpdated : comments.attachment} alt="attachment" /> : null
                 }
             </div>
             {isEditing ? (

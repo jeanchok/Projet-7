@@ -83,7 +83,7 @@ exports.getOnePost = (req, res, next) => {
 
 // Modify a post controller
 exports.modifyPost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id })
+  Post.findOne({ where: { id: req.params.id } })
     .then(
       (post) => {
         if (!post) {
